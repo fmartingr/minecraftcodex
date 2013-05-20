@@ -138,6 +138,14 @@ def syncdb():
         with prefix(env.activate):
             local('python minecraftcodex/manage.py syncdb --noinput')
             local('python minecraftcodex/manage.py loaddata ./config/development/admin.json')
+            local('python minecraftcodex/manage.py migrate')
+
+
+def schemamigration(app, flag='--auto'):
+    if not active_virtualenv():
+        with prefix(env.activate):
+            local('python minecraftcodex/manage.py schemamigration %s %s' % (app, flag))
+
 
 # Easy-mode
 def prepare():

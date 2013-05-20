@@ -2,3 +2,4 @@
 README
 setup.py
 minecraftcodex/__init__.py
+minecraftcodex/manage.py

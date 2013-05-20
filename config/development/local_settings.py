@@ -1,5 +1,5 @@
 LOCAL_SETTINGS = True
-from herobrine.settings import *
+from settings import *
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

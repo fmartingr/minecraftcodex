@@ -182,7 +182,7 @@ def run():
 def test():
     if not active_virtualenv():
         with prefix(env.activate):
-            local('python -m unittest discover')
+            local('python minecraftcodex/runtests/runtests.py')
             with settings(hide('warnings', 'running', 'stdout', 'stderr'),
                           warn_only=True):
                 local('find . -type d -name __pycache__ -exec rm -rf {} \;',

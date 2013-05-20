@@ -15,7 +15,7 @@ class Mod(models.Model):
 
 
 class ModAdmin(admin.ModelAdmin):
-    list_display = ('name', 'last_version', 'url', )
+    list_display = ('name', 'last_version', 'url_html', )
     list_display_links = ('name', )
 
     list_filter = ('name', )
@@ -23,6 +23,15 @@ class ModAdmin(admin.ModelAdmin):
     ordering = ('name', )
 
     def last_version(self, obj):
-        return '0.0.0'
+        return obj.version_set.all().\
+            order_by('-date')[0].version_number
+
+    def url_html(self, obj):
+        if obj.url != '':
+            return ('<a href="%s">%s</a>' % (obj.url, obj.url))
+        else:
+            return "--"
+    url_html.short_description = 'URL'
+    url_html.allow_tags = True
 
 admin.site.register(Mod, ModAdmin)

@@ -122,8 +122,13 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'grappelli',
     'django.contrib.admin',
 )
+
+# Admin
+GRAPPELLI_ADMIN_TITLE = 'Minecraft Codex'
+AUTOCOMPLETE_LIMIT = 10
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

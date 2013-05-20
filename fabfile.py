@@ -137,7 +137,19 @@ def syncdb():
     if not active_virtualenv():
         with prefix(env.activate):
             local('python minecraftcodex/manage.py syncdb --noinput')
+            execute(migrate)
+
+
+def fixtures():
+    if not active_virtualenv():
+        with prefix(env.activate):
             local('python minecraftcodex/manage.py loaddata ./config/development/admin.json')
+            local('python minecraftcodex/manage.py loaddata ./config/production/vanilla.json')
+
+
+def migrate():
+    if not active_virtualenv():
+        with prefix(env.activate):
             local('python minecraftcodex/manage.py migrate')
 
 

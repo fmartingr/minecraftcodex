@@ -1,0 +1,10 @@
+[
+    {
+        "pk": 1,
+        "model": "database.mod",
+        "fields": {
+            "url": "http://www.minecraft.com/",
+            "name": "Vanilla"
+        }
+    }
+]

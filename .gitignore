@@ -2,3 +2,4 @@
 *.pyc
 /virtualenv
 /minecraftcodex/herobrine/local_settings.py
+/MANIFEST

@@ -22,8 +22,8 @@ env.python = None
 env.development_ddbb = 'dev.sqlite3'
 
 # Configuration
-python_version = "3.3.1"
-#python_version = "2.7.5"
+#python_version = "3.3.1"
+python_version = "2.7.5"
 
 
 # Functions

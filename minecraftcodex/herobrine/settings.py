@@ -124,6 +124,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'grappelli',
     'django.contrib.admin',
+    'database',
+    'south'
 )
 
 # Admin
@@ -135,6 +137,7 @@ AUTOCOMPLETE_LIMIT = 10
 # the site admins on every HTTP 500 error when DEBUG=False.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
+"""
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -158,7 +161,7 @@ LOGGING = {
         },
     }
 }
-
+"""
 try:
     LOCAL_SETTINGS
 except NameError:

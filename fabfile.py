@@ -8,7 +8,7 @@
 from fabric.api import local, env, prefix, execute
 from fabric.context_managers import settings, hide
 from os.path import exists
-from os import environ, stat
+from os import environ, stat, getcwd
 from fabric.colors import yellow, red, green
 from subprocess import PIPE, Popen
 import sys
@@ -22,8 +22,8 @@ env.python = None
 env.development_ddbb = 'dev.sqlite3'
 
 # Configuration
-#python_version = "3.3.1"
-python_version = "2.7.4"
+python_version = "3.3.1"
+#python_version = "2.7.5"
 
 
 # Functions
@@ -133,6 +133,12 @@ def requirements(environ='global'):
             local('pip freeze')
 
 
+def syncdb():
+    if not active_virtualenv():
+        with prefix(env.activate):
+            local('python minecraftcodex/manage.py syncdb --noinput')
+            local('python minecraftcodex/manage.py loaddata ./config/development/admin.json')
+
 # Easy-mode
 def prepare():
     execute(create_virtualenv)
@@ -146,9 +152,12 @@ def p():
 def run():
     if not active_virtualenv():
         with prefix(env.activate):
-            environ['BACKEND_SETTINGS'] = 'config.development.backend_settings'
-            local('python app.py')
-
+            path = getcwd()
+            with settings(hide('warnings', 'running'),
+                          warn_only=True):
+                local('ln -s %s/config/development/local_settings.py %s/minecraftcodex/herobrine/local_settings.py' % (path, path))
+                local('python minecraftcodex/manage.py runserver')
+            local('rm ./minecraftcodex/herobrine/local_settings.py')
 
 def test():
     if not active_virtualenv():

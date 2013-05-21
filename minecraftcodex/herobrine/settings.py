@@ -93,7 +93,7 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
-JINGO_INCLUDE_PATTERN = r'\.jinja2'
+JINGO_INCLUDE_PATTERN = r'\.html'
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -131,6 +131,16 @@ INSTALLED_APPS = (
 # Admin
 GRAPPELLI_ADMIN_TITLE = 'Minecraft Codex'
 AUTOCOMPLETE_LIMIT = 10
+
+# Jingo
+EXCLUDE_APPS = (
+    'admin',
+    'debug_toolbar', # If installed
+)
+JINJA_CONFIG = {
+    'autoescape': True
+}
+#from herobrine import filters
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

@@ -10,5 +10,3 @@ DATABASES = {
         'NAME': 'dev_ddbb.sqlite',
     }
 }
-
-JINGO_EXCLUDE_APPS = ('debug_toolbar',)

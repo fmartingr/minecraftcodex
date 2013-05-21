@@ -3,3 +3,5 @@
 /virtualenv
 /minecraftcodex/herobrine/local_settings.py
 /MANIFEST
+/minecraftcodex/database/static/lib/bootstrap.css
+/minecraftcodex/database/static/lib/responsive.css

@@ -16,5 +16,8 @@ urlpatterns = patterns('',
     (r'^grappelli/', include('grappelli.urls')),
     url(r'^management/', include(admin.site.urls)),
     url(r'^$', 'database.views.home'),
+    # Static
+    url(r'^about/', 'database.views.about'),
+    # Database
     url(r'^versions/', 'database.views.versions')
 )

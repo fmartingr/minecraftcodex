@@ -25,3 +25,6 @@ def versions(request):
     }
 
     return render_to_response('versions.html', data)
+
+def about(request):
+    return render_to_response('about.html')

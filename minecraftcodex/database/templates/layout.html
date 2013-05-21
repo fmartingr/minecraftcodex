@@ -29,6 +29,11 @@
                                 <a href="/versions">Versions</a>
                             </li>
                         </ul>
+                        <ul class="nav pull-right">
+                            <li class="pull-right">
+                                <a href="/about">About the project</a>
+                            </li>
+                        </ul>
                     </div><!-- /.nav-collapse -->
                 </div>
             </div><!-- /navbar-inner -->
@@ -36,7 +41,6 @@
     </header>
     <div class="container">
         {% block content %}
-        Content
         {% endblock %}
     </div>
     <footer class="container-fluid">
@@ -44,7 +48,6 @@
         <div class="pull-left">
             <small>
                 MinecraftCodex v.{{ app_version }}<br />
-                This site is under construction. It's public so people can see its evolution.<br />
                 If you have feedback, please use the contact information on the right.
             </small>
         </div>

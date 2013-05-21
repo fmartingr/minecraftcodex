@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th nowrap="nowrap">Version number</th>
+                <th>Released</th>
+                <th>Changes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <h1>Minecraft versions</h1>
+            <hr />
+            {% for item in page.object_list %}
+            <tr>
+                <td nowrap="nowrap">
+                    <p class="text-center">
+                        {{ item.status }} {{ item.version_number }}
+                    </p>
+                </td>
+                <td>
+                    <p class="text-center">
+                        {{ item.date }}
+                    </p>
+                </td>
+                <td>
+                    {{ item.changelog|nl2br }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination pagination-centered">
+        <ul>
+            {% for p in range(1, paginator.num_pages) %}
+            <li {% if p == page_number %}class="active"{% endif %}>
+                <a href="?page={{p}}">{{ p }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

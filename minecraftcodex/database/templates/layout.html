@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/lib/font-awesome.3.1.1.css" />
+    <link rel="stylesheet" href="/static/lib/bootstrap.css" />
+    <link rel="stylesheet" href="/static/lib/responsive.css" />
+    <title>Title</title>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container" style="width: auto;">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="/">
+                        Minecraft Codex 
+                        <sup>alpha! :3</sup>
+                    </a>
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            <li class="{% if section == 'home' %}active{% endif %}">
+                                <a href="/">Home</a>
+                            </li>
+                            <li class="{% if section == 'versions' %}active{% endif %}">
+                                <a href="/versions">Versions</a>
+                            </li>
+                        </ul>
+                    </div><!-- /.nav-collapse -->
+                </div>
+            </div><!-- /navbar-inner -->
+        </div>      
+    </header>
+    <div class="container">
+        {% block content %}
+        Content
+        {% endblock %}
+    </div>
+    <footer class="container-fluid">
+        <hr style="margin: 0" />
+        <div class="pull-left">
+            <small>
+                MinecraftCodex v.{{ app_version }}<br />
+                This site is under construction. It's public so people can see its evolution.<br />
+                If you have feedback, please use the contact information on the right.
+            </small>
+        </div>
+        <div class="pull-right">
+            <a href="http://twitter.com/minecraftcodex">
+                <i class="icon-twitter"></i> @minecraftcodex
+            </a><br />
+            <a href="#">
+                <i class="icon-envelope"></i> Email
+            </a>
+        </div>
+    </footer>
+</body>
+</html>

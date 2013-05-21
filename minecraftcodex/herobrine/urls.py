@@ -15,4 +15,6 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^grappelli/', include('grappelli.urls')),
     url(r'^management/', include(admin.site.urls)),
+    url(r'^$', 'database.views.home'),
+    url(r'^versions/', 'database.views.versions')
 )

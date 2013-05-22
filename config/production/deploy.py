@@ -198,7 +198,6 @@ if not CONTINUE:
 
 # ================== GIT DOWNLOAD ==================
 title('Getting last source code')
-"""
 if not exists(GIT_DOWNLOAD_DIR):
     os.mkdir(GIT_DOWNLOAD_DIR)
     sub('git clone:')
@@ -212,7 +211,7 @@ else:
                   stderr=open(os.devnull, 'wb'))
 
 check_status(status)
-"""
+
 # =========== CHECK SCRIPT UPDATE ==================
 title('Checking if deploy script is updated on repository')
 actual_size = os.stat('./deploy.py').st_size

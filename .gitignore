@@ -5,3 +5,7 @@
 /MANIFEST
 /minecraftcodex/database/static/lib/bootstrap.css
 /minecraftcodex/database/static/lib/responsive.css
+/utils/miner/classes
+/utils/miner/jarfile
+/utils/miner/*.jar
+/utils/miner/*.json

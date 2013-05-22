@@ -14,7 +14,7 @@ GIT_PATH_THIS = '%s/config/production/deploy.py' % GIT_DOWNLOAD_DIR
 
 VIRTUALENV_PATH = './virtualenv'
 
-CHECK_SCRIPT_UPDATE = False
+CHECK_SCRIPT_UPDATE = True
 
 PYTHON = {
     'py': 'python-2.7',

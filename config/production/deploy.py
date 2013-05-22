@@ -17,9 +17,9 @@ VIRTUALENV_PATH = './virtualenv'
 CHECK_SCRIPT_UPDATE = True
 
 PYTHON = {
-    'py': 'python-2.7',
-    'pip': 'pip-2.7',
-    'virtualenv': 'virtualenv-2.7'
+    'py': 'python2',
+    'pip': 'pip2',
+    'virtualenv': 'virtualenv2'
 }
 
 PIP_REQUIREMENTS_FILES = [

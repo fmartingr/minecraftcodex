@@ -24,4 +24,4 @@ npm install -g less
 useradd app
 mkdir /home/app
 chown app:app /home/app
-
+echo "Remember to create ssh keypair for the server."

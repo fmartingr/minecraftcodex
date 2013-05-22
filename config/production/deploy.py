@@ -5,12 +5,9 @@ from subprocess import call, Popen, PIPE
 from shutil import copytree
 
 # Config
-APPS_PATH = './app'
-CONFIGS_PATH = './config'
-APP_DIRECTORY = '%s/minecraftcodex' % APPS_PATH
+APP_DIRECTORY = './app'
 
 GIT_REPOSITORY = 'git@bitbucket.org:fmartingr/minecraftcodex.git'
-GIT_BRANCH = 'master'
 GIT_DOWNLOAD_DIR = './src'
 GIT_APP_PATH = 'minecraftcodex'
 GIT_PATH_THIS = '%s/config/production/deploy.py' % GIT_DOWNLOAD_DIR
@@ -18,7 +15,6 @@ GIT_PATH_THIS = '%s/config/production/deploy.py' % GIT_DOWNLOAD_DIR
 VIRTUALENV_PATH = './virtualenv'
 
 CHECK_SCRIPT_UPDATE = False
-THIS_NAME = 'deploy.py'
 
 PYTHON = {
     'py': 'python-2.7',
@@ -27,28 +23,56 @@ PYTHON = {
 }
 
 PIP_REQUIREMENTS_FILES = [
-    #'%s/config/requirements.pip' % GIT_DOWNLOAD_DIR,
     '%s/config/production/requirements.pip' % GIT_DOWNLOAD_DIR
 ]
 
 CONFIG_FILES = [
     (
-        '%s/config/development/local_settings.py' % GIT_DOWNLOAD_DIR,
-        '%s/local_settings.py' % CONFIGS_PATH
+        '%s/config/production/local_settings.py' % GIT_DOWNLOAD_DIR,
+        '%s/herobrine/local_settings.py' % APP_DIRECTORY
     ),
 ]
 
 FIXTURES = [
-    #'%s/config/development/initial_data.json' % GIT_DOWNLOAD_DIR
+    #'%s/config/production/initial_data.json' % GIT_DOWNLOAD_DIR
 ]
 
 REQUIREMENTS = [
-    'git',
+    'git', 'coffee', 'lessc', 'uglifyjs'
 ]
 
+# Paths relatives to APP DIR
+PREPROCESSORS = {
+    'coffee': {
+        'items': [
+            #('shoes/static/coffee/usc.coffee', 'shoes/static/js/usc.big.js'),
+        ],
+        'params': ''
+    },
+    'less': {
+        'items': [
+            #('shoes/static/less/style.less', 'shoes/static/css/style.css'),
+        ],
+        'params': '-s -x'
+    },
+    'uglify': {
+        'items': [
+            #('shoes/static/js/usc.big.js', 'shoes/static/js/usc.js'),
+        ],
+        'params': '-c warnings=false'
+    }
+}
+
 ENVIRONMENT_VARIABLES = [
-    'DATABASE_URL'
+    'DATABASE_HOST',
+    'DATABASE_USER',
+    'DATABASE_PASS',
+    'DATABASE_PORT',
+    'DATABASE_NAME'
 ]
+
+SERVER_PORT = 8001
+RUNSERVER_PARAMS = "0.0.0.0:%d" % SERVER_PORT
 
 CONTINUE = True
 
@@ -170,14 +194,15 @@ if not CONTINUE:
     print("")
     error('Prequisites not met. Abort.')
     #error('You should CTRL+C now, errors may occur!')
-    exit(1)
+    exit(-1)
 
 # ================== GIT DOWNLOAD ==================
 title('Getting last source code')
+"""
 if not exists(GIT_DOWNLOAD_DIR):
     os.mkdir(GIT_DOWNLOAD_DIR)
     sub('git clone:')
-    status = call(['git', 'clone', '-b', GIT_BRANCH, GIT_REPOSITORY, GIT_DOWNLOAD_DIR],
+    status = call(['git', 'clone', GIT_REPOSITORY, GIT_DOWNLOAD_DIR],
                   stdout=open(os.devnull, 'wb'),
                   stderr=open(os.devnull, 'wb'))
 else:
@@ -187,28 +212,27 @@ else:
                   stderr=open(os.devnull, 'wb'))
 
 check_status(status)
-
+"""
 # =========== CHECK SCRIPT UPDATE ==================
-if CHECK_SCRIPT_UPDATE:
-    title('Checking if deploy script is updated on repository')
-    actual_size = os.stat('./%s.py' % THIS_NAME).st_size
-    repository_size = os.stat(GIT_PATH_THIS).st_size
-    if repository_size != actual_size:
-        sub('Script is updated.', end='\r\n')
+title('Checking if deploy script is updated on repository')
+actual_size = os.stat('./deploy.py').st_size
+repository_size = os.stat(GIT_PATH_THIS).st_size
+if repository_size != actual_size and CHECK_SCRIPT_UPDATE:
+    sub('Script is updated.', end='\r\n')
 
-        sub('Deleting old script:')
-        status = call(['rm', './%s.py' % THIS_NAME], stdout=open(os.devnull, 'wb'))
-        check_status(status)
+    sub('Deleting old script:')
+    status = call(['rm', './deploy.py'], stdout=open(os.devnull, 'wb'))
+    check_status(status)
 
-        sub('Installing new version:')
-        status = call(['cp', GIT_PATH_THIS, './%s.py' % THIS_NAME],
-                      stdout=open(os.devnull, 'wb'))
-        check_status(status)
-        info('Restarting execution!')
-        os.system('%s ./%s.py' % (PYTHON['py'], THIS_NAME))
-        exit(0)
-    else:
-        sub('Script is up-to-date.', end='\r\n')
+    sub('Installing new version:')
+    status = call(['cp', GIT_PATH_THIS, './deploy.py'],
+                  stdout=open(os.devnull, 'wb'))
+    check_status(status)
+    info('Restarting execution!')
+    os.system('%s ./deploy.py' % PYTHON['py'])
+    exit(0)
+else:
+    sub('Script is up-to-date.', end='\r\n')
 
 # =========== VIRTUALENV =========================
 title('Checking and updating virtualenv')
@@ -247,9 +271,7 @@ if exists(APP_DIRECTORY):
                   stdout=open(os.devnull, 'wb'))
 check_status(status)
 
-if not exists(APPS_PATH):
-    call(['mkdir', 'app'])
-
+#call(['mkdir', APP_DIRECTORY])
 sub('Copy source to application dir:')
 git_path = "%s/%s" % (GIT_DOWNLOAD_DIR, GIT_APP_PATH)
 app_path = "%s" % (APP_DIRECTORY)
@@ -263,17 +285,13 @@ except Exception as error:
 #check_status(status)
 
 title('Installing config files')
-if not exists(CONFIGS_PATH):
-    call(['mkdir', CONFIGS_PATH])
-    call(['touch', "%s/__init__.py" % CONFIGS_PATH])
-
 for from_file, to_file in CONFIG_FILES:
     sub('%s:' % os.path.basename(from_file))
     if exists(from_file):
         if os.stat(from_file).st_size > 0:
             status = call(['cp', from_file, to_file],
                           stdout=open(os.devnull, 'wb'))
-            check_status(status, words=[os.path.basename(to_file), 'error!'])
+            check_status(status)
         else:
             echo('empty', color=colors.YELLOW)
     else:
@@ -282,7 +300,100 @@ for from_file, to_file in CONFIG_FILES:
 # ============ DATABASE MIGRATIONS ==============
 title('Database migrations')
 # Syncdb
-sub('Not ready yet!')
+sub('django syncdb:')
+status = call(
+    'source %s/bin/activate && python %s/manage.py syncdb --noinput' % (
+        VIRTUALENV_PATH,
+        APP_DIRECTORY
+    ),
+    stdout=open(os.devnull, 'wb'),
+    shell=True, executable='/bin/bash'
+)
+check_status(status)
+if FIXTURES:
+    # Loading fixtures
+    for fixture in FIXTURES:
+        sub('[fixture] %s:' % fixture)
+        status = call(
+            'source %s/bin/activate && python %s/manage.py loaddata %s' % (
+                VIRTUALENV_PATH,
+                APP_DIRECTORY,
+                fixture
+            ),
+            stdout=open(os.devnull, 'wb'),
+            shell=True, executable='/bin/bash'
+        )
+        check_status(status, words=['installed', 'not installed'])
+
+# South migrate
+sub('south migrate:')
+status = call(
+    'source %s/bin/activate && python %s/manage.py migrate' % (
+        VIRTUALENV_PATH,
+        APP_DIRECTORY
+    ),
+    stdout=open(os.devnull, 'wb'),
+    shell=True, executable='/bin/bash'
+)
+check_status(status)
+
+# ================= COMPILERS ===================
+if PREPROCESSORS['coffee']['items']:
+    title('Coffeescript compiling')
+    for coffee in PREPROCESSORS['coffee']['items']:
+        sub("%s:" % coffee[0])
+        path = "%s/%s" % (APP_DIRECTORY, coffee[0])
+        path_to = "%s/%s" % (APP_DIRECTORY, coffee[1])
+        params = ['coffee', '-p', path, '>', path_to]
+        status = call(" ".join(params),
+                      stdout=open(os.devnull, 'wb'),
+                      shell=True)
+        check_status(status, words=[os.path.basename(path_to), 'failed'])
+
+if PREPROCESSORS['uglify']['items']:
+    title('Javascript compressing')
+    sub('Original files are removed.', end='\r\n')
+    for javascript in PREPROCESSORS['uglify']['items']:
+        sub("+ %s:" % javascript[0])
+        path = "%s/%s" % (APP_DIRECTORY, javascript[0])
+        path_to = "%s/%s" % (APP_DIRECTORY, javascript[1])
+        params = ['uglifyjs', path, PREPROCESSORS['uglify']['params'], '>', path_to]
+        status = call(" ".join(params),
+                      stdout=open(os.devnull, 'wb'),
+                      stderr=open(os.devnull, 'wb'),
+                      shell=True)
+        check_status(status, words=[os.path.basename(path_to), 'failed'])
+        sub('- Deleting %s:' % path)
+        status = call(['rm', path],
+                      stdout=open(os.devnull, 'wb'),
+                      stderr=open(os.devnull, 'wb'))
+        check_status(status)
+
+if PREPROCESSORS['less']['items']:
+    title('LESS compiling and CSS compressing')
+    for item in PREPROCESSORS['less']['items']:
+        sub("%s:" % item[0])
+        path = "%s/%s" % (APP_DIRECTORY, item[0])
+        path_to = "%s/%s" % (APP_DIRECTORY, item[1])
+        params = ['lessc', PREPROCESSORS['less']['params'], path, '>', path_to]
+        status = call(" ".join(params),
+                      stdout=open(os.devnull, 'wb'),
+                      shell=True)
+        check_status(status, words=[os.path.basename(path_to), 'failed'])
+
+title('Collecting all staticfiles')
+sub('manage.py collectstatic')
+status = call(
+    'source %s/bin/activate && python %s/manage.py collectstatic --noinput' % (
+        VIRTUALENV_PATH,
+        APP_DIRECTORY
+    ),
+    stdout=open(os.devnull, 'wb'),
+    shell=True, executable='/bin/bash'
+)
+check_status(status)
+# ================ SERVER =======================
+
 
 print("")
 success('Finished!')

@@ -51,7 +51,8 @@ PREPROCESSORS = {
     },
     'less': {
         'items': [
-            #('shoes/static/less/style.less', 'shoes/static/css/style.css'),
+            ('database/static/lib/bootstrap/less/bootstrap.less', 'database/static/lib/bootstrap.css'),
+            ('database/static/lib/bootstrap/less/responsive.less', 'database/static/lib/responsive.css'),
         ],
         'params': '-s -x'
     },

@@ -20,6 +20,8 @@ systemctl enable postgresql
 echo "=> Installing nginx"
 # Install nginx
 pacman -S nginx --noconfirm
+systemctl start nginx
+systemctl enable nginx
 
 echo "=> Installing git"
 # Install git

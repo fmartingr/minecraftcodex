@@ -35,6 +35,11 @@ CONFIG_FILES = [
         '%s/config/production/nginx.conf' % GIT_DOWNLOAD_DIR,
         './conf/nginx.conf'
     ),
+    (
+        '%s/config/production/app.supervisor.conf' % GIT_DOWNLOAD_DIR,
+        './conf/app.supervisor.conf'
+    ),
+
 ]
 
 FIXTURES = [

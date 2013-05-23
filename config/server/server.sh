@@ -1,12 +1,17 @@
 #!/bin/bash
+set -e
 
-# CONFIG
-WORKERS=2
-SETTINGS="herobrine.local_settings"
+LOGFILE=/home/app/logs/gunicorn.log
+LOGDIR=$(dirname $LOGFILE)
+NUM_WORKERS=1
+USER=app
+GROUP=app
+SETTINGS="herobrine.settings"
 
-# Get environment resources
-source .bash_profile
-source virtualenv/bin/activate
-
-# Start
-gunicorn_django app --settings=$SETTINGS -w $WORKERS
+cd /home/app
+source .environment
+source ./virtualenv/bin/activate
+test -d $LOGDIR || mkdir -p $LOGDIR
+exec gunicorn_django app --settings=$SETTINGS -w $NUM_WORKERS \
+  --user=$USER --group=$GROUP --log-level=debug \
+  --log-file=$LOGFILE 2>>$LOGFILE

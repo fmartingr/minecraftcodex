@@ -31,6 +31,10 @@ CONFIG_FILES = [
         '%s/config/production/local_settings.py' % GIT_DOWNLOAD_DIR,
         '%s/herobrine/local_settings.py' % APP_DIRECTORY
     ),
+    (
+        '%s/config/production/nginx.conf' % GIT_DOWNLOAD_DIR,
+        './conf/nginx.conf'
+    ),
 ]
 
 FIXTURES = [
@@ -213,6 +217,13 @@ else:
 
 check_status(status)
 
+sub('Storing current version:')
+status = call('cd %s && git describe' % GIT_DOWNLOAD_DIR,
+              stdout=open('./conf/app_version', 'wb'),
+              stderr=open(os.devnull, 'wb'),
+              shell=True)
+check_status(status)
+
 # =========== CHECK SCRIPT UPDATE ==================
 title('Checking if deploy script is updated on repository')
 actual_size = os.stat('./deploy.py').st_size
@@ -382,7 +393,7 @@ if PREPROCESSORS['less']['items']:
         check_status(status, words=[os.path.basename(path_to), 'failed'])
 
 title('Collecting all staticfiles')
-sub('manage.py collectstatic')
+sub('manage.py ollectstatic:')
 status = call(
     'source %s/bin/activate && python %s/manage.py collectstatic --noinput' % (
         VIRTUALENV_PATH,
@@ -392,8 +403,8 @@ status = call(
     shell=True, executable='/bin/bash'
 )
 check_status(status)
-# ================ SERVER =======================
 
+# ================ SERVER =======================
 
 print("")
 success('Finished!')

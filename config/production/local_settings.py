@@ -30,3 +30,13 @@ STATIC_URL = '/static/'
 # Mediafiles
 MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'
+
+# Sentry
+RAVEN_CONFIG = {
+    'dsn': 'http://809b0824b821462db7902f96cf5ad2c9:bf82b9625be84d9fb2f2a15af1009176@sentry.fmartingr.com/4',
+}
+
+INSTALLED_APPS = INSTALLED_APPS + (
+    'raven.contrib.django.raven_compat',
+    'gunicorn'
+)

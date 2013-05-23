@@ -34,9 +34,16 @@ npm install -g coffee-script
 npm install -g uglify-js
 npm install -g less
 
-echo "=> Creating user app and its home folder"
+echo "=> Creating user APP with its requirements"
 # Create site user
 useradd app
 mkdir /home/app
 chown app:app /home/app
-echo "[REMEMBER!] create ssh keypair for the server."
+su - app -c "mkdir conf"
+su - app -c "touch ./conf/app_version"
+su - app -c "touch .environment"
+su - app -c "echo 'source .environment' > .bash_profile"
+
+# Reminders
+echo "[REMEMBER!]"
+echo " - Create ssh keypair for the server."

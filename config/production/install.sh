@@ -43,4 +43,5 @@ su - app -c "echo 'source .environment' > .bash_profile"
 
 # Reminders
 echo "[REMEMBER!]"
-echo " - Create ssh keypair for the server."
+echo " - Create ssh keypair for the app user."
+echo " - Configure sudo to let app user execute the maintenance scripts."

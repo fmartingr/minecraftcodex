@@ -413,6 +413,19 @@ status = call(
 check_status(status)
 
 # ================ SERVER =======================
+title('Server')
+sub('Killing all gunicorn_django instances')
+status = call(['killall', 'gunicorn_django'],
+              stdout=open(os.devnull, 'wb'),
+              stderr=open(os.devnull, 'wb'))
+check_status(status)
+
+sub('Restarting with supervisor')
+status = call(['sudo', 'supervisorctl', 'restart', 'gunicorn'],
+              stdout=open(os.devnull, 'wb'),
+              stderr=open(os.devnull, 'wb'))
+check_status(status)
+
 
 print("")
 success('Finished!')

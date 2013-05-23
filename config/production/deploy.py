@@ -39,7 +39,10 @@ CONFIG_FILES = [
         '%s/config/production/app.supervisor.conf' % GIT_DOWNLOAD_DIR,
         './conf/app.supervisor.conf'
     ),
-
+    (
+        '%s/config/production/server.sh' % GIT_DOWNLOAD_DIR,
+        './server.sh'
+    ),
 ]
 
 FIXTURES = [

@@ -1,10 +1,13 @@
 from django.shortcuts import render_to_response
 from database.models import Version
 from django.core.paginator import Paginator
-from django.template import Context
+from django.template import RequestContext
+
 
 def home(request):
-    return render_to_response('home.html')
+    context = RequestContext(request)
+    return render_to_response('home.html', context_instance=context)
+
 
 def versions(request):
     section = 'versions'
@@ -23,8 +26,11 @@ def versions(request):
         'page_number': page_number,
         'paginator': paginator,
     }
+    context = RequestContext(request, data)
 
-    return render_to_response('versions.html', data)
+    return render_to_response('versions.html', context_instance=context)
+
 
 def about(request):
-    return render_to_response('about.html')
+    context = RequestContext(request)
+    return render_to_response('about.html', context_instance=context)

@@ -40,7 +40,7 @@ CONFIG_FILES = [
         './conf/app.supervisor.conf'
     ),
     (
-        '%s/config/production/server.sh' % GIT_DOWNLOAD_DIR,
+        '%s/config/server/server.sh' % GIT_DOWNLOAD_DIR,
         './server.sh'
     ),
 ]

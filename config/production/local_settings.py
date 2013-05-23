@@ -36,6 +36,11 @@ RAVEN_CONFIG = {
     'dsn': 'http://809b0824b821462db7902f96cf5ad2c9:bf82b9625be84d9fb2f2a15af1009176@sentry.fmartingr.com/4',
 }
 
+MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
+    'raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware',
+    'raven.contrib.django.raven_compat.middleware.Sentry404CatchMiddleware',
+)
+
 INSTALLED_APPS = INSTALLED_APPS + (
     'raven.contrib.django.raven_compat',
     'gunicorn'
@@ -46,7 +51,7 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'root': {
-        'level': 'WARNING',
+        'level': 'DEBUG',
         'handlers': ['sentry'],
     },
     'formatters': {
@@ -68,17 +73,17 @@ LOGGING = {
     'loggers': {
         'django.db.backends': {
             'level': 'ERROR',
-            'handlers': ['console'],
+            'handlers': ['console', 'sentry'],
             'propagate': False,
         },
         'raven': {
             'level': 'DEBUG',
-            'handlers': ['console'],
+            'handlers': ['console', 'sentry'],
             'propagate': False,
         },
         'sentry.errors': {
             'level': 'DEBUG',
-            'handlers': ['console'],
+            'handlers': ['console', 'sentry'],
             'propagate': False,
         },
     },

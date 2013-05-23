@@ -25,6 +25,8 @@ pacman -S git --noconfirm
 
 echo "=> Installing supervisor"
 pacman -S supervisor --noconfirm
+systemctl start supervisord
+systemctl enable supervisord
 
 echo "=> Installing nodejs and dependencies"
 pacman -S nodejs --noconfirm
@@ -45,3 +47,5 @@ su - app -c "echo 'source .environment' > .bash_profile"
 echo "[REMEMBER!]"
 echo " - Create ssh keypair for the app user."
 echo " - Configure sudo to let app user execute the maintenance scripts."
+echo " - Configure supervisor to include the app configuration."
+echo " - Configure nginx to include the app configuration."

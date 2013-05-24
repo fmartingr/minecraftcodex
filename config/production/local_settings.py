@@ -88,3 +88,8 @@ LOGGING = {
         },
     },
 }
+
+TEMPLATE_CONTEXT = [
+    ('google_analytics', 'UA-41178753-1'),
+    ('app_version', environ['APP_VERSION']),
+]

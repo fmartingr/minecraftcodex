@@ -76,6 +76,7 @@ class Version(models.Model):
         blank=True,
         default='release'
     )
+    snapshot = models.BooleanField(default=False)
     date = models.DateField()
     url = models.URLField(blank=True, null=True)
     name = models.CharField(max_length=128,
@@ -83,6 +84,13 @@ class Version(models.Model):
         null=False
     )
     changelog = models.TextField('changelog')
+
+    def get_jarfiles(self):
+        self.jarfiles = JarFile.objects.filter(version=self)
+
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+        self.get_jarfiles()
 
     def __unicode__(self):
         return "%s %s" % (
@@ -96,7 +104,7 @@ class Version(models.Model):
 
 
 class VersionAdmin(admin.ModelAdmin):
-    list_display = ('mod', 'status', 'version_number', 'name', 'url_html', 'date')
+    list_display = ('mod', 'status', 'snapshot', 'version_number', 'name', 'url_html', 'date')
     list_display_links = ('version_number',)
     list_filter = ('mod', 'date', 'status')
     search_fields = ['version_number', 'name', 'changelog']

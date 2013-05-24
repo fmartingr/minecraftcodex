@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.http import HttpResponse
 
 # Admin
 from django.contrib import admin
@@ -19,5 +20,6 @@ urlpatterns = patterns('',
     # Static
     url(r'^about/', 'database.views.about'),
     # Database
-    url(r'^versions/', 'database.views.versions')
+    url(r'^versions/', 'database.views.versions'),
+    (r'^robots\.txt$', lambda r: HttpResponse("", mimetype="text/plain")),
 )

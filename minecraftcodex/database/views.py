@@ -5,7 +5,7 @@ from django.template import RequestContext
 
 
 def home(request):
-    context = RequestContext(request)
+    context = RequestContext(request, {'section': 'home'})
     return render_to_response('home.html', context_instance=context)
 
 
@@ -31,11 +31,16 @@ def versions(request):
     return render_to_response('versions.html', context_instance=context)
 
 def version(request, version, status='release'):
+    section = 'versions'
     item = Version.objects.get(status=status, version_number=version)
-    context = RequestContext(request, { 'item': item })
+    data = {
+        'section': section,
+        'item': item,
+    }
+    context = RequestContext(request, data)
     return render_to_response('version.html', context_instance=context)
 
 
 def about(request):
-    context = RequestContext(request)
+    context = RequestContext(request, {'section': 'about'})
     return render_to_response('about.html', context_instance=context)

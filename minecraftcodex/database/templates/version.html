@@ -13,7 +13,7 @@
     {% if item.jarfiles %}
         <h3>Downloads</h3>
         {% for jarfile in item.jarfiles %}
-            <button href="{{ jarfile.url }}" class="btn btn-info btn-small">{{ jarfile.description|capitalize }}</button>&nbsp;
+            <a href="{{ jarfile.url }}" class="btn btn-info btn-small">{{ jarfile.description|capitalize }}</a>&nbsp;
         {% endfor %}
     {% endif %}
     <h3>Changelog</h3>

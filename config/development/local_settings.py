@@ -11,3 +11,6 @@ DATABASES = {
     }
 }
 
+TEMPLATE_CONTEXT = [
+    ('app_version', '[local development]'),
+]

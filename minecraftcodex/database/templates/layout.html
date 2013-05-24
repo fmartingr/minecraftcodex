@@ -4,7 +4,8 @@
     <link rel="stylesheet" href="/static/lib/font-awesome.3.1.1.css" />
     <link rel="stylesheet" href="/static/lib/bootstrap.css" />
     <link rel="stylesheet" href="/static/lib/responsive.css" />
-    <title>Title</title>
+    {% include "head.html" %}
+    <title>{% block head_title %}{{ site_title }}{% endblock %}</title>
 </head>
 <body>
     <header>

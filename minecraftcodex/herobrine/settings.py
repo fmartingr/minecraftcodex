@@ -94,7 +94,8 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
-    'herobrine.context.templateContext',
+    'herobrine.context.TemplateContext',
+    'herobrine.context.SiteTitleContext',
 )
 
 JINGO_INCLUDE_PATTERN = r'\.html'
@@ -146,6 +147,9 @@ JINJA_CONFIG = {
     'autoescape': True
 }
 #from herobrine import filters
+
+# SITE TITLE
+SITE_TITLE = 'MinecraftCodex'
 
 
 try:

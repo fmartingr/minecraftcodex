@@ -175,9 +175,9 @@ def run():
             path = getcwd()
             with settings(hide('warnings', 'running'),
                           warn_only=True):
+                local('rm ./minecraftcodex/herobrine/local_settings.py')
                 local('ln -s %s/config/development/local_settings.py %s/minecraftcodex/herobrine/local_settings.py' % (path, path))
                 local('python minecraftcodex/manage.py runserver')
-            local('rm ./minecraftcodex/herobrine/local_settings.py')
 
 def test():
     if not active_virtualenv():

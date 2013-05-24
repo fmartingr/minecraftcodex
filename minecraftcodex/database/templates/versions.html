@@ -5,31 +5,45 @@
 {% endblock %}
 
 {% block content %}
-    <table class="table table-bordered">
+    <h1>Minecraft versions</h1>
+    <hr />
+    <table class="table table-condensed table-hover">
         <thead>
             <tr>
-                <th nowrap="nowrap">Version number</th>
-                <th>Released</th>
-                <th>Changes</th>
+                <th><div class="text-center">Status</div></th>
+                <th nowrap="nowrap"><div class="text-center">Version number</div></th>
+                <th><div class="text-center">Release date</div></th>
+                <th>Downloads</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            <h1>Minecraft versions</h1>
-            <hr />
             {% for item in page.object_list %}
             <tr>
-                <td nowrap="nowrap">
-                    <p class="text-center">
-                        {{ item.status }} {{ item.version_number }}
-                    </p>
+                <td>
+                   <div class="text-center">{{ item.status }}</div>
+                </td>
+                <td nowrap="nowrap" width="20%">
+                    <div class="text-center">{{ item.version_number }} </div>
                 </td>
                 <td>
-                    <p class="text-center">
-                        {{ item.date }}
-                    </p>
+                    <div class="text-center">{{ item.date }}</div>
                 </td>
                 <td>
-                    {{ item.changelog|nl2br }}
+                    {% if item.jarfiles %}
+                        {% for jarfile in item.jarfiles %}
+                            <button href="{{ jarfile.url }}" class="btn btn-info btn-small">{{ jarfile.description|capitalize }}</button>
+                        {% endfor %}
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="text-right">
+                        {% if item.status == 'release' %}
+                            <a href="{{ url('version_release', item.version_number)}}">More details &raquo;</a>
+                        {% else %}
+                            <a href="{{ url('version', item.status, item.version_number)}}">More details &raquo;</a>
+                        {% endif %}
+                    </div>
                 </td>
             </tr>
             {% endfor %}
@@ -39,7 +53,7 @@
         <ul>
             {% for p in range(1, paginator.num_pages) %}
             <li {% if p == page_number %}class="active"{% endif %}>
-                <a href="?page={{p}}">{{ p }}</a>
+                <a href="?page={{ p }}">{{ p }}</a>
             </li>
             {% endfor %}
         </ul>

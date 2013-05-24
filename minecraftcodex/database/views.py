@@ -11,8 +11,8 @@ def home(request):
 
 def versions(request):
     section = 'versions'
-    versions = Version.objects.all().order_by('-date', '-version_number')
-    paginator = Paginator(versions, 10)
+    versions = Version.objects.filter(snapshot=False).order_by('-date', '-version_number')
+    paginator = Paginator(versions, 50)
     page_number = 1
 
     if 'page' in request.GET:
@@ -29,6 +29,11 @@ def versions(request):
     context = RequestContext(request, data)
 
     return render_to_response('versions.html', context_instance=context)
+
+def version(request, version, status='release'):
+    item = Version.objects.get(status=status, version_number=version)
+    context = RequestContext(request, { 'item': item })
+    return render_to_response('version.html', context_instance=context)
 
 
 def about(request):

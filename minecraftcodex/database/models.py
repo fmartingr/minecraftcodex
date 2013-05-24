@@ -111,7 +111,7 @@ class VersionAdmin(admin.ModelAdmin):
     ordering = ('-date', '-version_number')
 
     def url_html(self, obj):
-        if obj.url != '':
+        if obj.url:
             return ('<a href="%s">%s</a>' % (obj.url, obj.url))
         else:
             return "--"

@@ -20,6 +20,8 @@ urlpatterns = patterns('',
     # Static
     url(r'^about/', 'database.views.about'),
     # Database
+    url(r'^versions/(?P<version>[a-z0-9\.\_]+)/', 'database.views.version', name='version_release'),
+    url(r'^versions/(?P<status>[a-z]+)\-(?P<version>[a-z0-9\.\_]+)/', 'database.views.version', name='version'),
     url(r'^versions/', 'database.views.versions'),
     # Robots
     (r'^robots\.txt$', lambda r: HttpResponse("", mimetype="text/plain")),

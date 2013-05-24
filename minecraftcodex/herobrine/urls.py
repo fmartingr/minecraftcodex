@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 # Admin
 from django.contrib import admin
@@ -21,5 +21,8 @@ urlpatterns = patterns('',
     url(r'^about/', 'database.views.about'),
     # Database
     url(r'^versions/', 'database.views.versions'),
+    # Robots
     (r'^robots\.txt$', lambda r: HttpResponse("", mimetype="text/plain")),
+    # Favicon
+    (r'^favicon\.ico$', lambda r: HttpResponseRedirect('/static/favicon.ico')),
 )

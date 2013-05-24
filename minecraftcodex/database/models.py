@@ -39,6 +39,31 @@ class ModAdmin(admin.ModelAdmin):
 admin.site.register(Mod, ModAdmin)
 
 ###
+#   JARFILE
+###
+class JarFile(models.Model):
+    version = models.ForeignKey('Version')
+    description = models.CharField(max_length=256, default='client')
+    url = models.URLField()
+
+    class Meta:
+        app_label = 'database'
+
+
+class JarFileAdmin(admin.ModelAdmin):
+    list_display = ('version', 'description', 'url_html', )
+
+    def url_html(self, obj):
+        if obj.url != '':
+            return ('<a href="%s">%s</a>' % (obj.url, obj.url))
+        else:
+            return "--"
+    url_html.short_description = 'URL'
+    url_html.allow_tags = True
+
+admin.site.register(JarFile, JarFileAdmin)
+
+###
 #   VERSION
 ###
 class Version(models.Model):

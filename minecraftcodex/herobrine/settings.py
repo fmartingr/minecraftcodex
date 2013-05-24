@@ -94,7 +94,7 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
-    'herobrine.context.AppVersionContext',
+    'herobrine.context.templateContext',
 )
 
 JINGO_INCLUDE_PATTERN = r'\.html'

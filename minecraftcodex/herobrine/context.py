@@ -1,11 +1,8 @@
-from os import environ
+from django.conf import settings
 
-
-def AppVersionContext(request):
+def templateContext(request):
     result = {}
-    if 'APP_VERSION' in environ:
-        result = {
-            'app_version': environ['APP_VERSION']
-        }
-
+    if hasattr(settings, 'TEMPLATE_CONTEXT'):
+        for item in settings.TEMPLATE_CONTEXT:
+            result[item[0]] = item[1]
     return result

@@ -1,21 +1,27 @@
 {% extends "layout.html" %}
 
 {% block head_title %}
-{{ super() }} | Version | {{ item.version_number }}
+{{ super() }} | Version | {{ version_number }}
 {% endblock %}
 
 {% block content %}
     <h1>Minecraft versions</h1>
     <hr />
-    <a href="/versions"><i class="icon-arrow-left"></i> Go back</a>
-    <h2>{% if item.status != 'release' %}{{ item.status }}{% endif %} {{ item.version_number }}</h2>
-    Released on {{ item.date }}
-    {% if item.jarfiles %}
-        <h3>Downloads</h3>
-        {% for jarfile in item.jarfiles %}
-            <a href="{{ jarfile.url }}" class="btn btn-info btn-small">{{ jarfile.description|capitalize }}</a>&nbsp;
-        {% endfor %}
+    <a href="/versions/"><i class="icon-arrow-left"></i> Go back</a>
+    <h2>{% if status != 'release' %}{{ status }}{% endif %} {{ version_number }}</h2>
+    {% if results > 1 %}
+    <div class="alert alert-info">This version contains more than one release.</div>
     {% endif %}
-    <h3>Changelog</h3>
-    <p>{{ item.changelog|nl2br }}</p>
+    {% for version in items %}
+        <hr />
+        Released on {{ version.date }}
+        {% if version.jarfiles %}
+            <h3>Downloads</h3>
+            {% for jarfile in version.jarfiles %}
+                <a href="{{ jarfile.url }}" class="btn btn-info btn-small">{{ jarfile.description|capitalize }}</a>&nbsp;
+            {% endfor %}
+        {% endif %}
+        <h3>Changelog</h3>
+        <p>{{ version.changelog|nl2br }}</p>
+    {% endfor %}
 {% endblock %}

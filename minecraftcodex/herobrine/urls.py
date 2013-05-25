@@ -16,15 +16,24 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^grappelli/', include('grappelli.urls')),
     url(r'^management/', include(admin.site.urls)),
-    url(r'^$', 'database.views.home'),
+    # Home
+    url(r'^$', 'database.views.home', name='homepage'),
     # Static
-    url(r'^about/', 'database.views.about'),
-    # Database
-    url(r'^versions/(?P<version>[a-z0-9\.\_]+)/', 'database.views.version', name='version_release'),
-    url(r'^versions/(?P<status>[a-z]+)\-(?P<version>[a-z0-9\.\_]+)/', 'database.views.version', name='version'),
-    url(r'^versions/', 'database.views.versions'),
+    url(r'^about/', 'database.views.about', name='aboutpage'),
+    # Versions
+    url(r'^versions/(?P<version>[A-Za-z0-9\.\_ ]+)/',
+        'database.views.version',
+        name='version_release'
+    ),
+    url(r'^versions/(?P<status>[a-z]+)\-(?P<version>[A-Za-z0-9\.\_ ]+)/',
+        'database.views.version',
+        name='version'
+    ),
+    url(r'^versions/', 'database.views.versions', name='version_list'),
+
     # Robots
     (r'^robots\.txt$', lambda r: HttpResponse("", mimetype="text/plain")),
+
     # Favicon
     (r'^favicon\.ico$', lambda r: HttpResponseRedirect('/static/favicon.ico')),
 )

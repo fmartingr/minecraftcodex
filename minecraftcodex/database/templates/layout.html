@@ -13,7 +13,8 @@
         <div class="navbar">
             <div class="navbar-inner">
                 <div class="container" style="width: auto;">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <a class="btn btn-navbar" data-toggle="collapse" 
+                       data-target=".nav-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -25,15 +26,15 @@
                     <div class="nav-collapse">
                         <ul class="nav">
                             <li class="{% if section == 'home' %}active{% endif %}">
-                                <a href="/">Home</a>
+                                <a href="{{ url('homepage') }}">Home</a>
                             </li>
                             <li class="{% if section == 'versions' %}active{% endif %}">
-                                <a href="/versions">Versions</a>
+                                <a href="{{ url('version_list') }}">Versions</a>
                             </li>
                         </ul>
                         <ul class="nav pull-right">
                             <li class="pull-right {% if section == 'about' %}active{% endif %}">
-                                <a href="/about">About the project</a>
+                                <a href="{{ url('aboutpage') }}">About the project</a>
                             </li>
                         </ul>
                     </div><!-- /.nav-collapse -->

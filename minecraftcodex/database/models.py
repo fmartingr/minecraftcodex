@@ -138,6 +138,8 @@ class Texture(models.Model):
 class TextureAdmin(admin.ModelAdmin):
     list_display = ('name', 'type', 'image_html', )
     list_display_links = ('name', )
+    list_filter = ('type', )
+    search_fields = ('name', 'image', )
 
     def image_html(self, obj):
         return('<img src="/static/textures/%s" height="32" />' % obj.get_image(2))

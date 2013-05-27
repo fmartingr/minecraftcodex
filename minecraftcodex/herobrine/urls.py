@@ -5,6 +5,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import admin
 admin.autodiscover()
 
+# Custom views
+handler404 = 'database.views.error404'
+handler500 = 'database.views.error500'
+
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'herobrine.views.home', name='home'),

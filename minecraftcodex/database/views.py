@@ -50,3 +50,13 @@ def version(request, version, status='release'):
 def about(request):
     context = RequestContext(request, {'section': 'about'})
     return render_to_response('about.html', context_instance=context)
+
+
+def error404(request):
+    context = RequestContext(request)
+    return render_to_response('errors/404.html', context_instance=context)
+
+
+def error500(request):
+    context = RequestContext(request)
+    return render_to_response('errors/500.html', context_instance=context)

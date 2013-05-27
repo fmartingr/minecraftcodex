@@ -91,15 +91,16 @@ new_old_data = {}
 new_old_data['list'] = []
 [new_old_data['list'].append(x.name) for x in BLOCKS]
 new_blocks = len(new_old_data['list'])-len(OLD_BLOCKS['list'])
-print('   Fetched %d items (%d new)' % (len(new_old_data['list']), new_blocks))
-print('   Modifications:')
-for item in BLOCKS:
-    if item.name not in OLD_BLOCKS['list']:
-        print('  + %s' % item.name)
+print('   Fetched %d blocks (%d new)' % (len(new_old_data['list']), new_blocks))
+if new_blocks > 0:
+    print('   Modifications:')
+    for item in BLOCKS:
+        if item.name not in OLD_BLOCKS['list']:
+            print('  + %s' % item.name)
 
-for item in OLD_BLOCKS['list']:
-    if item not in new_old_data['list']:
-        print('  - %s' % item)
+    for item in OLD_BLOCKS['list']:
+        if item not in new_old_data['list']:
+            print('  - %s' % item)
 
 oldblocks = open('blocks.json', 'w')
 oldblocks.write(json.dumps(new_old_data))

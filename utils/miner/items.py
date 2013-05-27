@@ -37,7 +37,7 @@ for keyword in conf.ITEMS_JAVA_KEYWORDS:
 ###
 #   GET ITEMS INFO FROM CLASSFILE
 ###
-print("  => Mining items...")
+print("   => Mining items...")
 
 # Old items for final count
 try:
@@ -89,14 +89,15 @@ new_old_data['list'] = []
 [new_old_data['list'].append(x.name) for x in ITEMS]
 new_items = len(new_old_data['list'])-len(OLD_ITEMS['list'])
 print('   Fetched %d items (%d new)' % (len(ITEMS), new_items))
-print('   Modifications:')
-for item in ITEMS:
-    if item.name not in OLD_ITEMS['list']:
-        print('  + %s' % item.name)
+if new_items > 0:
+    print('   Modifications:')
+    for item in ITEMS:
+        if item.name not in OLD_ITEMS['list']:
+            print('  + %s' % item.name)
 
-for item in OLD_ITEMS['list']:
-    if item not in new_old_data['list']:
-        print('  - %s' % item)
+    for item in OLD_ITEMS['list']:
+        if item not in new_old_data['list']:
+            print('  - %s' % item)
 
 olditems = open('items.json', 'w')
 olditems.write(json.dumps(new_old_data))

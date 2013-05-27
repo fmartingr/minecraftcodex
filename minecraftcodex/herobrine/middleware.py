@@ -11,7 +11,7 @@ class HTMLCleanerMiddleware(object):
                 # Remove spaces
                 content = strip_spaces_between_tags(content)
                 # Remove HTML comments
-                exp = re.compile('\<![ \r\n\t]*(--([^\-]|[\r\n]|-[^\-])*--[ \r\n\t]*)\>')
+                exp = re.compile('\<![ \r\n\t]*(-- ([^\-]|[\r\n]|-[^\-])*--[ \r\n\t]*)\>')
                 content = exp.sub('', content)
             response.content = content
         return response

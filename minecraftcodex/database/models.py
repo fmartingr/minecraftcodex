@@ -135,6 +135,7 @@ class Texture(models.Model):
             path = path.replace('.png', '_x%d.png' % size)
         return path
 
+
 class TextureAdmin(admin.ModelAdmin):
     list_display = ('name', 'type', 'image_html', )
     list_display_links = ('name', )
@@ -147,3 +148,30 @@ class TextureAdmin(admin.ModelAdmin):
     image_html.allow_tags = True
 
 admin.site.register(Texture, TextureAdmin)
+
+
+###
+#   ITEM
+###
+class Item(models.Model):
+    internal_name = models.CharField(max_length=128)
+    main_texture = models.ForeignKey('Texture', null=True)
+    data_value = models.IntegerField()
+
+
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ('internal_name', 'data_value', 'main_texture_html')
+    list_display_links = ('internal_name', )
+    #list_filter = ('type', )
+    search_fields = ('internal_name', 'data_value', )
+
+    def main_texture_html(self, obj):
+        if obj.main_texture:
+            return(
+                '<img src="/static/textures/%s" height="32" />' % \
+                    obj.main_texture.get_image(2)
+            )
+    main_texture_html.short_description = 'Image'
+    main_texture_html.allow_tags = True
+
+admin.site.register(Item, ItemAdmin)

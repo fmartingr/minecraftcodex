@@ -35,6 +35,9 @@ urlpatterns = patterns('',
     ),
     url(r'^versions/', 'database.views.versions', name='version_list'),
 
+    # Items
+    url(r'^items/', 'database.views.items', name='items_list'),
+
     # Robots
     (r'^robots\.txt$', lambda r: HttpResponse("", mimetype="text/plain")),
 

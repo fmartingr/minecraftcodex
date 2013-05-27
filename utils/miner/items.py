@@ -14,6 +14,10 @@ from objects import GameItem
 
 print("=> Phase: items")
 
+if conf.SAVE:
+    sys.path.append('../../minecraftcodex')
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'local_settings'
+    from database.models import Item, Texture
 
 ###
 #   GLOBALS
@@ -81,6 +85,27 @@ for java_file in conf.ITEMS_FILES:
                     print('- - - - - -')
 
                 ITEMS.append(obj)
+
+if conf.SAVE:
+    for item in ITEMS:
+        try:
+            obj = Item.objects.get(
+                internal_name=item.name,
+                data_value=item.id
+            )
+        except Item.DoesNotExist:
+            obj = Item(
+                internal_name=item.name,
+                data_value=item.id
+            )
+        try:
+            texture = Texture.objects.get(name__exact=obj.internal_name)
+            obj.main_texture = texture
+        except Exception as error:
+            print(error)
+            pass
+        obj.save()
+
 
 # Print the miner summary and compile the new old data
 print('   => Summary')

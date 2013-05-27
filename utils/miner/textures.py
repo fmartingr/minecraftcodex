@@ -13,9 +13,10 @@ from objects import GameTexture
 
 print("=> Phase: textures")
 
-path.append('../../minecraftcodex')
-environ['DJANGO_SETTINGS_MODULE'] = 'local_settings'
-from database.models import Texture
+if conf.SAVE:
+    path.append('../../minecraftcodex')
+    environ['DJANGO_SETTINGS_MODULE'] = 'local_settings'
+    from database.models import Texture
 
 TEXTURES = []
 

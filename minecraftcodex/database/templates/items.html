@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Items</h1>
+    <hr />
+    <table class="table table-condensed table-hover">
+        <thead>
+            <tr>
+                <th width="20" nowrap="nowrap"><div class="text-center">Data value</div></th>
+                <th nowrap="nowrap"><div class="text-center">Texture</div></th>
+                <th><div class="text-center">Name</div></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in page.object_list %}
+            <tr>
+                <td>
+                   <div class="text-center">{{ item.data_value }}</div>
+                </td>
+                <td>
+                    <div class="text-center">
+                        {% if item.main_texture %}
+                        <img src="/static/textures/{{ item.main_texture.get_image(2) }}" />
+                        {% endif %}
+                    </div>
+                </td>
+                <td>
+                    {{ item.internal_name }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination pagination-centered">
+        <ul>
+            {% for p in range(1, paginator.num_pages+1) %}
+            <li {% if p == page_number %}class="active"{% endif %}>
+                <a href="{{ url('items_list') }}?page={{ p }}">{{ p }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

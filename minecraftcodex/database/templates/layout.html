@@ -4,11 +4,19 @@
     <link rel="stylesheet" href="/static/lib/font-awesome.3.1.1.css" />
     <link rel="stylesheet" href="/static/lib/bootstrap.css" />
     <link rel="stylesheet" href="/static/lib/responsive.css" />
+    <link rel="stylesheet" href="/static/css/style.css" />
     {% block head %}{% endblock %}
     {% include "head.html" %}
     <title>{% block head_title %}{{ site_title }}{% endblock %}</title>
 </head>
 <body>
+    <div class="alert alert-info margin-none text-center">
+        <strong>
+            Lack of information?
+            We are in <u>alpha</u>!
+            Expect more data over the next weeks.
+        </strong>
+    </div>
     <header>
         <div class="navbar">
             <div class="navbar-inner">

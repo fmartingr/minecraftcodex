@@ -38,6 +38,9 @@ urlpatterns = patterns('',
     # Items
     url(r'^items/', 'database.views.items', name='items_list'),
 
+    # Items
+    url(r'^blocks/', 'database.views.blocks', name='blocks_list'),
+
     # Robots
     (r'^robots\.txt$', lambda r: HttpResponse("", mimetype="text/plain")),
 

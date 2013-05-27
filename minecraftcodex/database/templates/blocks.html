@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <h1>Items</h1>
+    <h1>Blocks</h1>
     <hr />
     <table class="table table-condensed table-hover">
         <thead>
@@ -15,7 +15,7 @@
             {% for item in page.object_list %}
             <tr>
                 <td>
-                   <div class="text-center">{{ item.data_value + 256 }}</div>
+                   <div class="text-center">{{ item.data_value }}</div>
                 </td>
                 <td>
                     <div class="text-center">
@@ -35,7 +35,7 @@
         <ul>
             {% for p in range(1, paginator.num_pages+1) %}
             <li {% if p == page_number %}class="active"{% endif %}>
-                <a href="{{ url('items_list') }}?page={{ p }}">{{ p }}</a>
+                <a href="{{ url('blocks_list') }}?page={{ p }}">{{ p }}</a>
             </li>
             {% endfor %}
         </ul>

@@ -25,7 +25,7 @@ class GameItem(object):
 ##
 class GameBlock(object):
     def __init__(self, game_id, *args):
-        self.id = int(game_id)
+        self.id = int(game_id)# + 256
 
     def __str__(self, *args):
         return "<Block(%d: '%s')>" % (

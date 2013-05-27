@@ -9,3 +9,4 @@
 /utils/miner/jarfile
 /utils/miner/*.jar
 /utils/miner/*.json
+/minecraftcodex/database/static/css/*.css

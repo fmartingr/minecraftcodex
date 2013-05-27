@@ -65,6 +65,7 @@ PREPROCESSORS = {
         'items': [
             ('database/static/lib/bootstrap/less/bootstrap.less', 'database/static/lib/bootstrap.css'),
             ('database/static/lib/bootstrap/less/responsive.less', 'database/static/lib/responsive.css'),
+            ('database/static/less/style.less', 'database/static/css/style.css'),
         ],
         'params': '-s -x'
     },

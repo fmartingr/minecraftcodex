@@ -51,7 +51,7 @@
     </table>
     <div class="pagination pagination-centered">
         <ul>
-            {% for p in range(1, paginator.num_pages) %}
+            {% for p in range(1, paginator.num_pages+1) %}
             <li {% if p == page_number %}class="active"{% endif %}>
                 <a href="{{ url('version_list') }}?page={{ p }}">{{ p }}</a>
             </li>

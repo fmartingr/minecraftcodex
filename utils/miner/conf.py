@@ -4,6 +4,7 @@ DEBUG = False
 #   TEXTURES
 ###
 TEXTURES_PATHS = ['jarfile/textures/blocks', 'jarfile/textures/items']
+TEXTURES_EXTRA_SIZES_MULTIPLIER = [2, 4, 6, 8]
 
 ###
 #   ITEMS

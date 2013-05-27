@@ -46,8 +46,16 @@ class GameBlock(object):
 #   TEXTURE
 ##
 class GameTexture(object):
-    def __init__(self, name):
+    def __init__(self, name, typ, path):
         self.name = self.parse_name(name)
+        self.path = path
+        self.type = typ
+
+    def __str__(self, *args):
+        return "<Texture (%s: '%s')>" % (
+            self.type,
+            self.name
+        )
 
     def parse_name(self, name):
         return name.split('.')[0]

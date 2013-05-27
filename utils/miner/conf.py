@@ -1,5 +1,7 @@
 DEBUG = False
 
+SAVE = True
+
 ###
 #   TEXTURES
 ###

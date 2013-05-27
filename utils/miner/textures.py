@@ -31,22 +31,23 @@ for path in conf.TEXTURES_PATHS:
     # GO!
     for f in listdir(path):
         if isfile(join(path, f)):
-            # Copy original image
-            destiny_path = '../../minecraftcodex/database/static/%s' % join(path, f).\
-                    replace('jarfile/', '')
-            destiny = open(destiny_path, 'w+')
-            destiny.write(open(join(path, f)).read())
-            destiny.close()
-            # making more sizes for the site
-            try:
-                modified = Image.open(destiny_path)
-                for multiplier in conf.TEXTURES_EXTRA_SIZES_MULTIPLIER:
-                    sizes = (modified.size[0] * multiplier, modified.size[1] * multiplier)
-                    modified_path = destiny_path.replace('.png', '_x%d.png' % multiplier)
-                    resized = modified.resize(sizes, Image.NEAREST)
-                    resized.save(modified_path, 'PNG')
-            except IOError:
-                pass
+            if conf.SAVE:
+                # Copy original image
+                destiny_path = '../../minecraftcodex/database/static/%s' % join(path, f).\
+                        replace('jarfile/', '')
+                destiny = open(destiny_path, 'w+')
+                destiny.write(open(join(path, f)).read())
+                destiny.close()
+                # making more sizes for the site
+                try:
+                    modified = Image.open(destiny_path)
+                    for multiplier in conf.TEXTURES_EXTRA_SIZES_MULTIPLIER:
+                        sizes = (modified.size[0] * multiplier, modified.size[1] * multiplier)
+                        modified_path = destiny_path.replace('.png', '_x%d.png' % multiplier)
+                        resized = modified.resize(sizes, Image.NEAREST)
+                        resized.save(modified_path, 'PNG')
+                except IOError:
+                    pass
 
             TEXTURES.append(
                 GameTexture(
@@ -56,19 +57,20 @@ for path in conf.TEXTURES_PATHS:
                 )
             )
 
-for texture in TEXTURES:
-    try:
-        item = Texture.objects.get(
-            name=texture.name,
-            type=texture.type
-        )
-    except Texture.DoesNotExist:
-        item = Texture(
-            name=texture.name,
-            type=texture.type,
-            image=texture.path
-        )
-        item.save()
+if conf.SAVE:
+    for texture in TEXTURES:
+        try:
+            item = Texture.objects.get(
+                name=texture.name,
+                type=texture.type
+            )
+        except Texture.DoesNotExist:
+            item = Texture(
+                name=texture.name,
+                type=texture.type,
+                image=texture.path
+            )
+            item.save()
 
 print('   => Summary')
 new_old_data = {}

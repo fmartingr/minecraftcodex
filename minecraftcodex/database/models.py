@@ -119,3 +119,29 @@ class VersionAdmin(admin.ModelAdmin):
     url_html.allow_tags = True
 
 admin.site.register(Version, VersionAdmin)
+
+
+###
+#   TEXTURE
+###
+class Texture(models.Model):
+    name = models.CharField(max_length=32)
+    type = models.CharField(max_length=16, default="items")
+    image = models.CharField(max_length=64)
+
+    def get_image(self, size='original'):
+        path = self.image
+        if size != 'original' and size in [2, 4, 6, 8]:
+            path = path.replace('.png', '_x%d.png' % size)
+        return path
+
+class TextureAdmin(admin.ModelAdmin):
+    list_display = ('name', 'type', 'image_html', )
+    list_display_links = ('name', )
+
+    def image_html(self, obj):
+        return('<img src="/static/textures/%s" height="32" />' % obj.get_image(2))
+    image_html.short_description = 'Image'
+    image_html.allow_tags = True
+
+admin.site.register(Texture, TextureAdmin)

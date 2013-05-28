@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib import admin
 import datetime
 from django.utils.timezone import utc
+from django import forms
 
 
 # Create your models here.
@@ -25,10 +26,20 @@ class BlogEntryAdmin(admin.ModelAdmin):
 
     prepopulated_fields = {"slug": ("title",)}
 
+    formfield_overrides = {
+        models.TextField: {
+            'widget': forms.Textarea(attrs={'class': 'redactor-editor'})
+        },
+    }
+
     class Media:
         css = {
             "all": ("lib/redactor.css",)
         }
-        js = ("lib/redactor.js",)
+        js = (
+            "lib/jquery.2.0.0.js",
+            "lib/redactor.8.2.5.js",
+            "js/load_redactor.js",
+        )
 
 admin.site.register(BlogEntry, BlogEntryAdmin)

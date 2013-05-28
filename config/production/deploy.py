@@ -57,7 +57,7 @@ REQUIREMENTS = [
 PREPROCESSORS = {
     'coffee': {
         'items': [
-            #('shoes/static/coffee/usc.coffee', 'shoes/static/js/usc.big.js'),
+            ('blog/static/coffee/load_redactor.coffee', 'blog/static/js/load_redactor.big.js'),
         ],
         'params': ''
     },
@@ -71,7 +71,7 @@ PREPROCESSORS = {
     },
     'uglify': {
         'items': [
-            #('shoes/static/js/usc.big.js', 'shoes/static/js/usc.js'),
+            ('blog/static/js/load_redactor.big.js', 'blog/static/js/load_redactor.js'),
         ],
         'params': '-c warnings=false'
     }

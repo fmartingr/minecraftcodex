@@ -2,7 +2,11 @@
 
 {% block content %}
     <p><a href="{{ url('blog_list') }}"><i class="icon-arrow-left"></i> Go back</a></p>
-    <h1>{{ item.title }}</h1>
-    <div><i class="icon-calendar"></i> {{ item.date|dt('%B %e, %Y') }}</div>
-    <p>{{ item.content|nl2br }}</p>
+    <article class="blog-entry">
+        <h1>{{ item.title }}</h1>
+        <div><i class="icon-calendar"></i> {{ item.date|dt('%B %e, %Y') }}</div>
+        <div class="content">
+            {{ item.content|safe }}
+        </div>
+    </article>
 {% endblock %}

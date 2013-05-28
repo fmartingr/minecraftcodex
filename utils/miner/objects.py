@@ -59,3 +59,24 @@ class GameTexture(object):
 
     def parse_name(self, name):
         return name.split('.')[0]
+
+
+###
+#   LANGUAGES
+###
+class GameLanguage(object):
+    def __init__(self, name=None, region=None, code=None):
+        self.name = name
+        self.region = region
+        self.code = code
+        self.strings = {}
+
+    def __str__(self):
+        return "<Language (%s: '%s')>" % (
+            self.code,
+            self.name
+        )
+
+    def add_string(self, key, value):
+        if key not in self.strings:
+            self.strings[key] = value

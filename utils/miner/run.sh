@@ -7,3 +7,5 @@ python textures.py
 python items.py
 
 python blocks.py
+
+python languages.py

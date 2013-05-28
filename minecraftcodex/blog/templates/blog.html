@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Blog</h1>
+    {% for item in page.object_list %}
+    <hr />
+    <article>
+        <h2><a href="/blog/{{ item.date.year }}/{{ item.date.month }}/{{ item.date.day }}/{{ item.slug }}">{{ item.title }}</a></h2>
+        <div><i class="icon-calendar"></i> {{ item.date|dt('%B %e, %Y') }}</div>
+        <p>{{ item.content|nl2br }}</p>
+    </article>
+    {% endfor %}
+    {% if paginator.num_pages > 1 %}
+    <div class="pagination pagination-centered">
+        <ul>
+            {% for p in range(1, paginator.num_pages+1) %}
+            <li {% if p == page_number %}class="active"{% endif %}>
+                <a href="{{ url('blocks_list') }}?page={{ p }}">{{ p }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.http import HttpResponse, HttpResponseRedirect
+from herobrine import filters
 
 # Admin
 from django.contrib import admin

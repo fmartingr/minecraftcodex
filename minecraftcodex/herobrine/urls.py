@@ -42,6 +42,11 @@ urlpatterns = patterns('',
     # Items
     url(r'^blocks/', 'database.views.blocks', name='blocks_list'),
 
+    # Blog
+    url(r'^blog/$', 'blog.views.blog', name='blog_list'),
+    url(r'^blog/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/(?P<slug>[\w\-]+)/$',
+        'blog.views.blog_item', name='blog_item'),
+
     # Robots
     (r'^robots\.txt$', lambda r: HttpResponse("", mimetype="text/plain")),
 

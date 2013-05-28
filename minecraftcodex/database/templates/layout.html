@@ -68,6 +68,9 @@ Thank you!
                             </li>
                         </ul>
                         <ul class="nav pull-right">
+                            <li class="pull-right {% if section == 'blog' %}active{% endif %}">
+                                <a href="{{ url('blog_list') }}">Blog</a>
+                            </li>
                             <li class="pull-right {% if section == 'about' %}active{% endif %}">
                                 <a href="{{ url('aboutpage') }}">About the project</a>
                             </li>
@@ -86,7 +89,8 @@ Thank you!
         <div class="pull-left">
             <small>
                 MinecraftCodex {% if app_version %}v.{{ app_version }}{% endif %}<br />
-                If you have feedback, please use the contact information to the right.
+                If you have feedback, please use the contact information to the right.<br />
+                All dates are UTC
             </small>
         </div>
         <div class="pull-right text-right">

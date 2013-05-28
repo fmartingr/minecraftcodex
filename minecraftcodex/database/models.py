@@ -251,7 +251,7 @@ admin.site.register(Language, LanguageAdmin)
 class LanguageString(models.Model):
     language = models.ForeignKey('Language', db_index=True)
     key = models.CharField(max_length=256, db_index=True)
-    value = models.CharField(max_length=512)
+    value = models.TextField()
 
 
 class LanguageStringAdmin(admin.ModelAdmin):

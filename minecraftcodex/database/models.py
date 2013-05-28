@@ -158,6 +158,18 @@ class Item(models.Model):
     main_texture = models.ForeignKey('Texture', null=True)
     data_value = models.IntegerField()
 
+    def name(self):
+        result = self.internal_name
+        try:
+            string = LanguageString.objects.get(
+                language=14,
+                key='item.%s.name' % self.internal_name
+            )
+            result = string.value
+        except:
+            pass
+        return result
+
 
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('internal_name', 'data_value', 'main_texture_html')
@@ -184,6 +196,18 @@ class Block(models.Model):
     internal_name = models.CharField(max_length=128)
     main_texture = models.ForeignKey('Texture', null=True)
     data_value = models.IntegerField()
+
+    def name(self):
+        result = self.internal_name
+        try:
+            string = LanguageString.objects.get(
+                language=14,
+                key='tile.%s.name' % self.internal_name
+            )
+            result = string.value
+        except:
+            pass
+        return result
 
 
 class BlockAdmin(admin.ModelAdmin):
@@ -213,7 +237,7 @@ class Language(models.Model):
     code = models.CharField(max_length=12)
 
     def __unicode__(self):
-	return "%s (%s)" % (self.name, self.region)
+        return "%s (%s)" % (self.name, self.region)
 
 
 class LanguageAdmin(admin.ModelAdmin):

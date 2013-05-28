@@ -10,3 +10,7 @@
 /utils/miner/*.jar
 /utils/miner/*.json
 /minecraftcodex/database/static/css/*.css
+/minecraftcodex/database/static/js/*.js
+/minecraftcodex/blog/static/js/*.js
+/*.json
+/dev_ddbb.sqlite

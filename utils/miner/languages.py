@@ -12,11 +12,11 @@ import conf
 from objects import GameLanguage
 
 
-print("=> Phase: blocks")
+print("=> Phase: languages")
 if conf.SAVE:
     sys.path.append('../../minecraftcodex')
     os.environ['DJANGO_SETTINGS_MODULE'] = 'local_settings'
-    from database.models import Block, Texture
+    from database.models import Language, LanguageString
 
 ###
 #   GLOBALS
@@ -55,7 +55,7 @@ for item in directory_list:
         for line in language.readlines():
             line = line.strip()
             if line and 'X-Generator' not in line:
-                key, value = line.split('=')
+                key, value = line.split('=', 1)
                 if key in conf.LANGUAGES_MASTER_KEYS:
                     # Language object
                     setattr(language_obj, key.split('.')[1], value)
@@ -67,11 +67,41 @@ for item in directory_list:
                     if language_obj.code == 'en_US':
                         if key not in STRINGS:
                             STRINGS.append(key)
-        LANGUAGES.append(language)
+        LANGUAGES.append(language_obj)
 
 if conf.SAVE:
-    pass
-    # Save here
+    for item in LANGUAGES:
+        try:
+            obj = Language.objects.get(
+                name=item.name,
+                region=item.region,
+                code=item.code
+            )
+        except Language.DoesNotExist:
+            obj = Language(
+                name=item.name,
+                region=item.region,
+                code=item.code
+            )
+            obj.save()
+        for key in item.strings.keys():
+            value = item.strings[key]
+            try:
+                string_obj = LanguageString.objects.get(
+                    language=obj,
+                    key=key
+                )
+                if string_obj.value != value:
+                    string_obj.value = value
+                    string_obj.save()
+            except LanguageString.DoesNotExist:
+                string_obj = LanguageString(
+                    language=obj,
+                    key=key,
+                    value=value
+                )
+                string_obj.save()
+
 
 
 print("   => Summary")

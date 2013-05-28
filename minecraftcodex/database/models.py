@@ -202,3 +202,39 @@ class BlockAdmin(admin.ModelAdmin):
     main_texture_html.allow_tags = True
 
 admin.site.register(Block, BlockAdmin)
+
+
+###
+#   LANGUAGES
+###
+class Language(models.Model):
+    name = models.CharField(max_length=64, db_index=True)
+    region = models.CharField(max_length=32)
+    code = models.CharField(max_length=12)
+
+    def __unicode__(self):
+	return "%s (%s)" % (self.name, self.region)
+
+
+class LanguageAdmin(admin.ModelAdmin):
+    list_display = ('name', 'region', )
+    list_display_links = ('name', )
+    search_fields = ('name', )
+
+admin.site.register(Language, LanguageAdmin)
+
+
+class LanguageString(models.Model):
+    language = models.ForeignKey('Language', db_index=True)
+    key = models.CharField(max_length=256, db_index=True)
+    value = models.CharField(max_length=512)
+
+
+class LanguageStringAdmin(admin.ModelAdmin):
+    list_display = ('language', 'key', 'value', )
+    list_display_links = ('language', 'key', )
+
+    list_filter = ('language', )
+    search_fields = ('key', 'value', )
+
+admin.site.register(LanguageString, LanguageStringAdmin)

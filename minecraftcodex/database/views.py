@@ -97,10 +97,15 @@ def about(request):
 
 
 def error404(request):
+    from raven.contrib.django.raven_compat.models import sentry_exception_handler
+    sentry_exception_handler(request=request)
     context = RequestContext(request)
     return render_to_response('errors/404.html', context_instance=context)
 
 
 def error500(request):
-    context = RequestContext(request)
+    data = {
+        'request': request
+    }
+    context = RequestContext(request, data)
     return render_to_response('errors/500.html', context_instance=context)

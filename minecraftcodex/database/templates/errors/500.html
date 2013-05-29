@@ -9,5 +9,11 @@
         problem and is on his way to solve it.<br />
         Sorry for any inconvenience, but remember, this is an alpha!
     </p>
+    {% if request.sentry.id %}
+        <p>
+            If you need assistance, you may reference this error as 
+            <strong>{{ request.sentry.id }}</strong>.
+        </p>
+    {% endif %}
 </div>
 {% endblock %}

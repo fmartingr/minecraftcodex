@@ -32,13 +32,21 @@ MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'
 
 # Sentry
+SENTRY_CLIENT = 'raven.contrib.django.raven_compat.DjangoClient'
 RAVEN_CONFIG = {
     'dsn': 'http://809b0824b821462db7902f96cf5ad2c9:bf82b9625be84d9fb2f2a15af1009176@sentry.fmartingr.com/4',
 }
 
-MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware',
     'raven.contrib.django.raven_compat.middleware.Sentry404CatchMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'herobrine.middleware.HTMLCleanerMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 INSTALLED_APPS = INSTALLED_APPS + (
@@ -51,7 +59,7 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'root': {
-        'level': 'DEBUG',
+        'level': 'WARNING',
         'handlers': ['sentry'],
     },
     'formatters': {
@@ -61,28 +69,28 @@ LOGGING = {
     },
     'handlers': {
         'sentry': {
-            'level': 'DEBUG',
+            'level': 'WARNING',
             'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
         },
         'console': {
-            'level': 'DEBUG',
+            'level': 'WARNING',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         }
     },
     'loggers': {
         'django.db.backends': {
-            'level': 'ERROR',
+            'level': 'WARNING',
             'handlers': ['console', 'sentry'],
             'propagate': False,
         },
         'raven': {
-            'level': 'DEBUG',
+            'level': 'WARNING',
             'handlers': ['console', 'sentry'],
             'propagate': False,
         },
         'sentry.errors': {
-            'level': 'DEBUG',
+            'level': 'WARNING',
             'handlers': ['console', 'sentry'],
             'propagate': False,
         },

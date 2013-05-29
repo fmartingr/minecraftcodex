@@ -42,17 +42,18 @@ Thank you!
         <div class="navbar">
             <div class="navbar-inner">
                 <div class="container" style="width: auto;">
-                    <a class="btn btn-navbar" data-toggle="collapse" 
+                    {#<a class="btn btn-navbar" data-toggle="collapse" 
                        data-target=".nav-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
-                    </a>
+                    </a>#}
                     <a class="brand" href="/">
                         Minecraft Codex 
                         <sup>alpha! :3</sup>
                     </a>
-                    <div class="nav-collapse">
+                    {#<div class="nav-collapse">#}
+                    <div>
                         <ul class="nav">
                             <li class="{% if section == 'home' %}active{% endif %}">
                                 <a href="{{ url('homepage') }}">Home</a>

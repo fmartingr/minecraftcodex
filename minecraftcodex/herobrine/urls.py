@@ -38,9 +38,11 @@ urlpatterns = patterns('',
 
     # Items
     url(r'^items/', 'database.views.items', name='items_list'),
+    url(r'^items/(?P<data_value>\d+)/', 'database.views.items_detail', name='items_detail'),
 
     # Items
     url(r'^blocks/', 'database.views.blocks', name='blocks_list'),
+    url(r'^blocks/(?P<data_value>\d+)/', 'database.views.blocks_detail', name='blocks_detail'),
 
     # Blog
     url(r'^blog/$', 'blog.views.blog', name='blog_list'),

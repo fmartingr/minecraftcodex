@@ -51,7 +51,7 @@ def items(request):
     section = 'items'
 
     items = Item.objects.all().order_by('data_value')
-    paginator = Paginator(items, 50)
+    paginator = Paginator(items, 48)
     page_number = 1
 
     if 'page' in request.GET:
@@ -69,11 +69,15 @@ def items(request):
     return render_to_response('items.html', context_instance=context)
 
 
+def items_detail(request, data_value):
+    pass
+
+
 def blocks(request):
     section = 'blocks'
 
     items = Block.objects.all().order_by('data_value')
-    paginator = Paginator(items, 50)
+    paginator = Paginator(items, 48)
     page_number = 1
 
     if 'page' in request.GET:
@@ -89,6 +93,10 @@ def blocks(request):
     }
     context = RequestContext(request, data)
     return render_to_response('blocks.html', context_instance=context)
+
+
+def blocks_detail(request, data_value):
+    pass
 
 
 def about(request):

@@ -3,6 +3,27 @@ from django.contrib import admin
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
+
+###
+#   Custom actions
+###
+def fix_icons(modeladmin, request, queryset):
+    items = queryset
+    for item in items:
+        try:
+            class_name = "%ss" % item.__class__.__name__.lower()
+            icon = Texture.objects.get(
+                name__exact=item.internal_name,
+                type=class_name
+            )
+            item.main_texture = icon
+            item.save()
+        except:
+            item.main_texture = None
+            item.save()
+fix_icons.short_description = "Fix icons for the selected items"
+
+
 ###
 #   ATTRIBUTE
 ###
@@ -206,6 +227,10 @@ class ItemAdmin(admin.ModelAdmin):
         ModelAttributeAdminInline
     ]
 
+    actions = [
+        fix_icons
+    ]
+
     def main_texture_html(self, obj):
         if obj.main_texture:
             return(
@@ -248,6 +273,10 @@ class BlockAdmin(admin.ModelAdmin):
 
     inlines = [
         ModelAttributeAdminInline
+    ]
+
+    actions = [
+        fix_icons
     ]
 
     def main_texture_html(self, obj):

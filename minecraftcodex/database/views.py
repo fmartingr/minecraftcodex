@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response
 from database.models import Version, Item, Block
 from django.core.paginator import Paginator
 from django.template import RequestContext
+from django.http import HttpResponseForbidden, Http404
 
 
 def home(request):
@@ -70,7 +71,17 @@ def items(request):
 
 
 def items_detail(request, data_value):
-    pass
+    section = 'items'
+    if request.user.is_authenticated():
+        item = Item.objects.get(data_value=int(data_value)-256)
+        data = {
+            'section': section,
+            'item': item
+        }
+        context = RequestContext(request, data)
+        return render_to_response('items_detail.html', context_instance=context)
+    else:
+        raise Http404
 
 
 def blocks(request):
@@ -96,8 +107,17 @@ def blocks(request):
 
 
 def blocks_detail(request, data_value):
-    pass
-
+    section = 'blocks'
+    if request.user.is_authenticated():
+        item = Block.objects.get(data_value=int(data_value))
+        data = {
+            'section': section,
+            'item': item
+        }
+        context = RequestContext(request, data)
+        return render_to_response('blocks_detail.html', context_instance=context)
+    else:
+        raise Http404
 
 def about(request):
     context = RequestContext(request, {'section': 'about'})

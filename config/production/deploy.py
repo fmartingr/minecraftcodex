@@ -73,7 +73,7 @@ PREPROCESSORS = {
             ('database/static/sass/style.sass', 'database/static/css/style.css'),
         ],
         'params': '--style compressed'
-    }
+    },
     'uglify': {
         'items': [
             ('blog/static/js/load_redactor.big.js', 'blog/static/js/load_redactor.js'),

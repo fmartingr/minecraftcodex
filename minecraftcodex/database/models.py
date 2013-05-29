@@ -3,6 +3,23 @@ from django.contrib import admin
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
+###
+#   ATTRIBUTE
+###
+class ModelAttribute(models.Model):
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    key = models.CharField(max_length=128)
+    value = models.TextField()
+
+    def __unicode__(self):
+        return self.key
+
+
+class ModelAttributeAdminInline(generic.GenericTabularInline):
+    model = ModelAttribute
+
 
 ###
 #   MOD
@@ -79,6 +96,7 @@ class Version(models.Model):
         blank=True,
         default='release'
     )
+    upcoming = models.BooleanField(default=False)
     snapshot = models.BooleanField(default=False)
     date = models.DateField()
     url = models.URLField(blank=True, null=True)
@@ -157,6 +175,7 @@ admin.site.register(Texture, TextureAdmin)
 #   ITEM
 ###
 class Item(models.Model):
+    version = models.ForeignKey('Version', null=True)
     internal_name = models.CharField(max_length=128)
     main_texture = models.ForeignKey('Texture', null=True)
     data_value = models.IntegerField()
@@ -180,6 +199,10 @@ class ItemAdmin(admin.ModelAdmin):
     #list_filter = ('type', )
     search_fields = ('internal_name', 'data_value', )
 
+    inlines = [
+        ModelAttributeAdminInline
+    ]
+
     def main_texture_html(self, obj):
         if obj.main_texture:
             return(
@@ -196,6 +219,7 @@ admin.site.register(Item, ItemAdmin)
 #   BLOCK
 ###
 class Block(models.Model):
+    version = models.ForeignKey('Version', null=True)
     internal_name = models.CharField(max_length=128)
     main_texture = models.ForeignKey('Texture', null=True)
     data_value = models.IntegerField()
@@ -218,6 +242,10 @@ class BlockAdmin(admin.ModelAdmin):
     list_display_links = ('internal_name', )
     #list_filter = ('type', )
     search_fields = ('internal_name', 'data_value', )
+
+    inlines = [
+        ModelAttributeAdminInline
+    ]
 
     def main_texture_html(self, obj):
         if obj.main_texture:
@@ -265,17 +293,3 @@ class LanguageStringAdmin(admin.ModelAdmin):
     search_fields = ('key', 'value', )
 
 admin.site.register(LanguageString, LanguageStringAdmin)
-
-
-###
-#   ATTRIBUTE
-###
-class ModelAttribute(models.Model):
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
-    key = models.CharField(max_length=128)
-    value = models.TextField()
-
-    def __unicode__(self):
-        return self.tag

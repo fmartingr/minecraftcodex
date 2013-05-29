@@ -73,7 +73,7 @@ def items(request):
 def items_detail(request, data_value):
     section = 'items'
     if request.user.is_authenticated():
-        item = Item.objects.get(data_value=int(data_value)-256)
+        item = Item.objects.get(data_value=int(data_value))
         data = {
             'section': section,
             'item': item

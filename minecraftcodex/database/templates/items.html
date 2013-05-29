@@ -7,13 +7,13 @@
         {% for item in page.object_list %}
         <div class="span3">
             {% if user.is_authenticated %}
-            <a href="{{ url('items_detail', item.data_value + 256) }}">
+            <a href="{{ url('items_detail', item.data_value) }}">
             {% else %}
             <a href="#">
             {% endif %}
                 <div class="well">
                     <div class="pull-right text-right">
-                        <span class="badge">{{ item.data_value + 256 }}</span>
+                        <span class="badge">{{ item.data_value }}</span>
                         <h5 class="text-black">{{ item.name() }}</h5>
                     </div>
                     <div class="codexicon x4 margin-auto pull-left">

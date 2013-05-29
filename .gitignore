@@ -14,3 +14,4 @@
 /minecraftcodex/blog/static/js/*.js
 /*.json
 /dev_ddbb.sqlite
+.sass-cache

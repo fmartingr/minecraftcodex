@@ -50,7 +50,7 @@ FIXTURES = [
 ]
 
 REQUIREMENTS = [
-    'git', 'coffee', 'lessc', 'uglifyjs'
+    'git', 'coffee', 'lessc', 'sass', 'uglifyjs'
 ]
 
 # Paths relatives to APP DIR
@@ -65,10 +65,15 @@ PREPROCESSORS = {
         'items': [
             ('database/static/lib/bootstrap/less/bootstrap.less', 'database/static/lib/bootstrap.css'),
             ('database/static/lib/bootstrap/less/responsive.less', 'database/static/lib/responsive.css'),
-            ('database/static/less/style.less', 'database/static/css/style.css'),
         ],
         'params': '-s -x'
     },
+    'sass': {
+        'items': [
+            ('database/static/sass/style.sass', 'database/static/css/style.css'),
+        ],
+        'params': '--style compressed'
+    }
     'uglify': {
         'items': [
             ('blog/static/js/load_redactor.big.js', 'blog/static/js/load_redactor.js'),
@@ -396,6 +401,18 @@ if PREPROCESSORS['less']['items']:
         path = "%s/%s" % (APP_DIRECTORY, item[0])
         path_to = "%s/%s" % (APP_DIRECTORY, item[1])
         params = ['lessc', PREPROCESSORS['less']['params'], path, '>', path_to]
+        status = call(" ".join(params),
+                      stdout=open(os.devnull, 'wb'),
+                      shell=True)
+        check_status(status, words=[os.path.basename(path_to), 'failed'])
+
+if PREPROCESSORS['sass']['items']:
+    title('SASS compiling and CSS compressing')
+    for item in PREPROCESSORS['sass']['items']:
+        sub("%s:" % item[0])
+        path = "%s/%s" % (APP_DIRECTORY, item[0])
+        path_to = "%s/%s" % (APP_DIRECTORY, item[1])
+        params = ['sass', PREPROCESSORS['sass']['params'], path, '>', path_to]
         status = call(" ".join(params),
                       stdout=open(os.devnull, 'wb'),
                       shell=True)

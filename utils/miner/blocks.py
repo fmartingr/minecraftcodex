@@ -93,11 +93,12 @@ if conf.SAVE:
         try:
             obj = Block.objects.get(
                 internal_name=item.name,
-                data_value=item.id
+                internal_id=item.id
             )
         except Block.DoesNotExist:
             obj = Block(
                 internal_name=item.name,
+                internal_id=item.id,
                 data_value=item.id
             )
         try:

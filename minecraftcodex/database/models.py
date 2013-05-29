@@ -8,8 +8,7 @@ from django.contrib.contenttypes import generic
 #   Custom actions
 ###
 def fix_icons(modeladmin, request, queryset):
-    items = queryset
-    for item in items:
+    for item in queryset:
         try:
             class_name = "%ss" % item.__class__.__name__.lower()
             icon = Texture.objects.get(
@@ -23,6 +22,16 @@ def fix_icons(modeladmin, request, queryset):
             item.save()
 
 fix_icons.short_description = "Fix icons for the selected items"
+
+
+def fix_item_data_values(modeladmin, request, queryset):
+    for item in queryset:
+        if item.internal_id == 0:
+            item.internal_id = item.data_value
+            if item.__class__.__name__ == 'Item':
+                item.data_value += 256
+            item.save()
+fix_item_data_values.short_description = "Fix data values"
 
 
 def match_with_minecraftwiki(modeladmin, request, queryset):
@@ -238,6 +247,7 @@ class Item(models.Model):
     internal_name = models.CharField(max_length=128)
     main_texture = models.ForeignKey('Texture', null=True, blank=True)
     data_value = models.IntegerField()
+    internal_id = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.name()
@@ -256,7 +266,7 @@ class Item(models.Model):
 
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'data_value', 'main_texture_html')
+    list_display = ('name', 'internal_id', 'data_value', 'main_texture_html')
     #list_filter = ('type', )
     search_fields = ('internal_name', 'data_value', )
 
@@ -266,6 +276,7 @@ class ItemAdmin(admin.ModelAdmin):
 
     actions = [
         fix_icons,
+        fix_item_data_values,
         match_with_minecraftwiki
     ]
 
@@ -289,6 +300,7 @@ class Block(models.Model):
     internal_name = models.CharField(max_length=128)
     main_texture = models.ForeignKey('Texture', null=True, blank=True)
     data_value = models.IntegerField()
+    internal_id = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.name()
@@ -307,7 +319,7 @@ class Block(models.Model):
 
 
 class BlockAdmin(admin.ModelAdmin):
-    list_display = ('name', 'data_value', 'main_texture_html')
+    list_display = ('name', 'internal_id', 'data_value', 'main_texture_html')
     #list_filter = ('type', )
     search_fields = ('internal_name', 'data_value', )
 
@@ -317,6 +329,7 @@ class BlockAdmin(admin.ModelAdmin):
 
     actions = [
         fix_icons,
+        fix_item_data_values,
         match_with_minecraftwiki
     ]
 

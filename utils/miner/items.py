@@ -91,12 +91,13 @@ if conf.SAVE:
         try:
             obj = Item.objects.get(
                 internal_name=item.name,
-                data_value=item.id
+                internal_id=item.id
             )
         except Item.DoesNotExist:
             obj = Item(
                 internal_name=item.name,
-                data_value=item.id
+                internal_id=item.id,
+                data_value=item.id+256
             )
         try:
             texture = Texture.objects.get(name__exact=obj.internal_name)

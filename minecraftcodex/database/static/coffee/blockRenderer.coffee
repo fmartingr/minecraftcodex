@@ -121,7 +121,7 @@ window.BlockRenderer = (model, textures, dom, width, height) ->
                 material = new THREE.MeshLambertMaterial map: texture
 
                 object = new THREE.Mesh new THREE.CubeGeometry(16, 16, 16), material
-                object.rotation.set Math.PI/6, Math.PI/4, 0
+                object.rotation.set Math.PI/6, (Math.PI/4)*-1, 0
                 
                 object
 

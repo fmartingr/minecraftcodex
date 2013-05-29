@@ -21,7 +21,35 @@ def fix_icons(modeladmin, request, queryset):
         except:
             item.main_texture = None
             item.save()
+
 fix_icons.short_description = "Fix icons for the selected items"
+
+
+def match_with_minecraftwiki(modeladmin, request, queryset):
+    import httplib
+    for item in queryset:
+        try:
+            attr = ModelAttribute.objects.get(
+                content_type=ContentType.objects.get_for_model(item),
+                object_id=item.pk,
+                key='minecraftwiki'
+            )
+        except:
+            name = item.name().replace(' ', '_')
+            conn = httplib.HTTPConnection('www.minecraftwiki.net')
+            conn.request("HEAD", '/wiki/%s' % name)
+            response = conn.getresponse()
+            if response.status == 200:
+                url = 'http://www.minecraftwiki.net/wiki/%s' % name
+                attr = ModelAttribute(
+                    content_type=ContentType.objects.get_for_model(item),
+                    object_id=item.pk,
+                    key='minecraftwiki',
+                    value=url
+                )
+                attr.save()
+
+match_with_minecraftwiki.short_description = "Match MinecraftWiki URLs"
 
 
 ###
@@ -37,6 +65,13 @@ class ModelAttribute(models.Model):
     def __unicode__(self):
         return self.key
 
+
+class ModelAttributeAdmin(admin.ModelAdmin):
+    list_display = ('content_object', 'key', 'value', )
+    list_filter = ('key', )
+    search_fields = ('key', 'value', )
+
+admin.site.register(ModelAttribute, ModelAttributeAdmin)
 
 class ModelAttributeAdminInline(generic.GenericTabularInline):
     model = ModelAttribute
@@ -204,6 +239,9 @@ class Item(models.Model):
     main_texture = models.ForeignKey('Texture', null=True, blank=True)
     data_value = models.IntegerField()
 
+    def __unicode__(self):
+        return self.name()
+
     def name(self):
         result = self.internal_name
         try:
@@ -218,8 +256,7 @@ class Item(models.Model):
 
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('internal_name', 'data_value', 'main_texture_html')
-    list_display_links = ('internal_name', )
+    list_display = ('name', 'data_value', 'main_texture_html')
     #list_filter = ('type', )
     search_fields = ('internal_name', 'data_value', )
 
@@ -228,7 +265,8 @@ class ItemAdmin(admin.ModelAdmin):
     ]
 
     actions = [
-        fix_icons
+        fix_icons,
+        match_with_minecraftwiki
     ]
 
     def main_texture_html(self, obj):
@@ -252,6 +290,9 @@ class Block(models.Model):
     main_texture = models.ForeignKey('Texture', null=True, blank=True)
     data_value = models.IntegerField()
 
+    def __unicode__(self):
+        return self.name()
+
     def name(self):
         result = self.internal_name
         try:
@@ -266,8 +307,7 @@ class Block(models.Model):
 
 
 class BlockAdmin(admin.ModelAdmin):
-    list_display = ('internal_name', 'data_value', 'main_texture_html')
-    list_display_links = ('internal_name', )
+    list_display = ('name', 'data_value', 'main_texture_html')
     #list_filter = ('type', )
     search_fields = ('internal_name', 'data_value', )
 
@@ -276,7 +316,8 @@ class BlockAdmin(admin.ModelAdmin):
     ]
 
     actions = [
-        fix_icons
+        fix_icons,
+        match_with_minecraftwiki
     ]
 
     def main_texture_html(self, obj):

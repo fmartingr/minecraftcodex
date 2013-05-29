@@ -3,6 +3,7 @@ from django.contrib import admin
 import datetime
 from django.utils.timezone import utc
 from django import forms
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -11,6 +12,8 @@ class BlogEntry(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
     slug = models.SlugField(max_length=128)
+    draft = models.BooleanField(default=True)
+    user = models.ForeignKey(User)
 
     class Meta:
         app_label = 'blog'

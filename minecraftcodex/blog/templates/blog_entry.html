@@ -4,7 +4,11 @@
     <p><a href="{{ url('blog_list') }}"><i class="icon-arrow-left"></i> Go back</a></p>
     <article class="blog-entry">
         <h1>{{ item.title }}</h1>
-        <div><i class="icon-calendar"></i> {{ item.date|dt('%B %e, %Y') }}</div>
+        <div>
+            <i class="icon-calendar"></i> {{ item.date|dt('%B %e, %Y') }}
+            &nbsp;
+            <i class="icon-user"></i> {{ item.user.first_name }}
+        </div>
         <div class="content">
             {{ item.content|safe }}
         </div>

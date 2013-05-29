@@ -2,13 +2,16 @@ from blog.models import BlogEntry
 from django.core.paginator import Paginator
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from datetime import datetime
 
 
 def blog(request):
     section = 'blog'
 
-    items = BlogEntry.objects.all()
+    if request.user.is_authenticated():
+        items = BlogEntry.objects.all()
+    else:
+        items = BlogEntry.objects.filter(draft=False)
+
     paginator = Paginator(items, 4)
     page_number = 1
 
@@ -28,12 +31,22 @@ def blog(request):
 
 
 def blog_item(request, year, month, day, slug):
-    item = BlogEntry.objects.get(
-        slug=slug,
-        date__year=int(year),
-        date__month=int(month),
-        date__day=int(day)
-    )
+
+    if request.user.is_authenticated():
+        item = BlogEntry.objects.get(
+            slug=slug,
+            date__year=int(year),
+            date__month=int(month),
+            date__day=int(day)
+        )
+    else:
+        item = BlogEntry.objects.get(
+            slug=slug,
+            date__year=int(year),
+            date__month=int(month),
+            date__day=int(day),
+            draft=False
+        )
 
     data = {
         'item': item

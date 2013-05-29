@@ -6,7 +6,16 @@
     <hr />
     <article class="blog-entry">
         <h2><a href="/blog/{{ item.date.year }}/{{ item.date.month }}/{{ item.date.day }}/{{ item.slug }}">{{ item.title }}</a></h2>
-        <div><i class="icon-calendar"></i> {{ item.date|dt('%B %e, %Y') }}</div>
+        <div>
+            <i class="icon-calendar"></i> {{ item.date|dt('%B %e, %Y') }}
+            &nbsp;
+            <i class="icon-user"></i> {{ item.user.first_name }}
+            {% if item.draft %}
+            <span class="badge badge-warning">
+                This post is a draft
+            </span>
+            {% endif %}
+        </div>
         <div class="content">{{ item.content|safe }}</div>
     </article>
     {% endfor %}

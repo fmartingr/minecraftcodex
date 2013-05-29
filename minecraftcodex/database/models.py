@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib import admin
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
+
 
 ###
 #   MOD
@@ -262,3 +265,17 @@ class LanguageStringAdmin(admin.ModelAdmin):
     search_fields = ('key', 'value', )
 
 admin.site.register(LanguageString, LanguageStringAdmin)
+
+
+###
+#   ATTRIBUTE
+###
+class ModelAttribute(models.Model):
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    key = models.CharField(max_length=128)
+    value = models.TextField()
+
+    def __unicode__(self):
+        return self.tag

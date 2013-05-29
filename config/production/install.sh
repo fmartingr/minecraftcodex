@@ -3,6 +3,15 @@
 echo "=> Updating system"
 pacman -Syu --noconfirm
 
+echo "=> Creating user APP with its requirements"
+useradd app
+mkdir /home/app
+chown app:app /home/app
+su - app -c "mkdir conf"
+su - app -c "touch ./conf/app_version"
+su - app -c "touch .environment"
+su - app -c "echo 'source .environment' > .bash_profile"
+
 echo "=> Installing python"
 pacman -S python2 python2-pip python2-virtualenv --noconfirm
 
@@ -34,14 +43,9 @@ npm install -g coffee-script
 npm install -g uglify-js
 npm install -g less
 
-echo "=> Creating user APP with its requirements"
-useradd app
-mkdir /home/app
-chown app:app /home/app
-su - app -c "mkdir conf"
-su - app -c "touch ./conf/app_version"
-su - app -c "touch .environment"
-su - app -c "echo 'source .environment' > .bash_profile"
+echo "=> Installing ruby and dependencies"
+pacman -S ruby --noconfirm
+su - app -c "gem install sass"
 
 # Reminders
 echo "[REMEMBER!]"
@@ -49,3 +53,4 @@ echo " - Create ssh keypair for the app user."
 echo " - Configure sudo to let app user execute the maintenance scripts."
 echo " - Configure supervisor to include the app configuration."
 echo " - Configure nginx to include the app configuration."
+echo " - Add ruby PATH to .environment on app user!"

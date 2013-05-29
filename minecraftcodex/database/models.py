@@ -150,6 +150,9 @@ class Texture(models.Model):
     type = models.CharField(max_length=16, default="items")
     image = models.CharField(max_length=64)
 
+    def __unicode__(self):
+        return self.name
+
     def get_image(self, size='original'):
         path = self.image
         if size != 'original' and size in [2, 4, 6, 8]:
@@ -175,9 +178,9 @@ admin.site.register(Texture, TextureAdmin)
 #   ITEM
 ###
 class Item(models.Model):
-    version = models.ForeignKey('Version', null=True)
+    version = models.ForeignKey('Version', null=True, blank=True)
     internal_name = models.CharField(max_length=128)
-    main_texture = models.ForeignKey('Texture', null=True)
+    main_texture = models.ForeignKey('Texture', null=True, blank=True)
     data_value = models.IntegerField()
 
     def name(self):
@@ -219,9 +222,9 @@ admin.site.register(Item, ItemAdmin)
 #   BLOCK
 ###
 class Block(models.Model):
-    version = models.ForeignKey('Version', null=True)
+    version = models.ForeignKey('Version', null=True, blank=True)
     internal_name = models.CharField(max_length=128)
-    main_texture = models.ForeignKey('Texture', null=True)
+    main_texture = models.ForeignKey('Texture', null=True, blank=True)
     data_value = models.IntegerField()
 
     def name(self):

@@ -52,6 +52,11 @@ window.onload = function() {
         }
     })
     $("select.flatui").selectpicker({style: 'btn-primary', menuStyle: 'dropdown-inverse'});
+
+    $("select.camera-type").change(function() {
+	mcstudio.onCameraChange($(this).val())
+    })
+    $("select.camera-type").change()
 }
 </script>
 {% endblock %}
@@ -67,7 +72,7 @@ window.onload = function() {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle"
                                data-toggle="dropdown">
-                                File
+				Creation
                                 <i class="icon-caret-down"></i>
                             </a>
                             <ul class="dropdown-menu">
@@ -99,7 +104,7 @@ window.onload = function() {
             <div class="texture-name pull-right"></div>
             <h3 class="margin-none">Textures</h3>
             <div class="text-center">
-                <input type="text" class="texture-search" placeholder="Search textures" />
+		<input type="text" class="texture-search" placeholder="Search..." />
             </div>
             <hr class="margin-none"/>
             <div class="texture-list">
@@ -114,9 +119,7 @@ window.onload = function() {
         </div>
     </div>
     <div class="panel panel-canvas">
-        <div class="well">
-            <div class="studio-canvas"></div>
-        </div>
+	<div class="studio-canvas"></div>
     </div>
     <div class="panel panel-right">
         <div class="well">
@@ -127,11 +130,13 @@ window.onload = function() {
             </button>
             <h3 class="margin-none">Camera</h3>
             <div id="camera" class="collapse in">
-
-            <select name="select" class="flatui">
-                <option value="meh1">Orthogonal</option>
-                <option value="meh2">Perspective</option>
-            </select>
+		<div class="text-right">
+		    Type:
+		    <select name="select" class="flatui camera-type ">
+			<option value="orthographic">Orthographic</option>
+			<option value="perspective">Perspective</option>
+		    </select>
+		</div>
 
             {#<label class="radio">
                 <span class="icons">
@@ -160,7 +165,7 @@ window.onload = function() {
             </button>
             <h3 class="margin-none">Objects</h3>
             <div id="objects" class="collapse in">
-                here things
+		// TODO
             </div>
             <hr />
             <button type="button" 

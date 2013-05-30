@@ -72,7 +72,7 @@ Thank you!
                         <ul class="nav pull-right">
                             {% if user.is_authenticated() %}
                             <li class="{% if section == 'studio' %}active{% endif %}">
-                                <a href="{{ url('studio') }}">Studio</a>
+                                <a href="{{ url('studio_main') }}">Studio</a>
                             </li>
                             {% endif %}
                             <li class="{% if section == 'blog' %}active{% endif %}">

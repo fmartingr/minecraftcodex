@@ -124,10 +124,6 @@ def about(request):
     return render_to_response('about.html', context_instance=context)
 
 
-def studio(request):
-    context = RequestContext(request)
-    return render_to_response('studio/main.html', context_instance=context)
-
 def error404(request):
     from raven.contrib.django.raven_compat.models import sentry_exception_handler
     sentry_exception_handler(request=request)

@@ -2,6 +2,8 @@
 
 {% block head %}
 {{ super() }}
+<script type="text/javascript" src="/static/lib/jquery.2.0.0.js"></script>
+<script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap-dropdown.js"></script>
 {% endblock %}
 
 {% block header %}
@@ -10,12 +12,24 @@
         <div class="navbar-inner">
             <div class="container" style="width: auto;">
                 <a class="brand" href="/">
-                    Minecraft Codex : Block Studio
+                    Minecraft Codex : Studio
                 </a>
                 {#<div class="nav-collapse">#}
                 <div>
                     <ul class="nav">
-                        
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle"
+                               data-toggle="dropdown">
+                                File
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">New</a></li>
+                                <li><a href="#">Save</a></li>
+                                <li class="divider"></li>
+                                <li><a href="{{ url('homepage') }}">Exit</a></li>
+                            </ul>
+                        </li>
                     </ul>
                     <ul class="nav pull-right">
                         <li>
@@ -33,13 +47,13 @@
 
 {% block content %}
 <div class="studio-editor">
-    <div class="span3">
+    <div class="span4">
         <div class="well">Left</div>
     </div>
-    <div class="span6">
+    <div class="span8">
         <div class="well">Canvas</div>
     </div>
-    <div class="span3">
+    <div class="span4">
         <div class="well">Right</div>
     </div>
 </div>

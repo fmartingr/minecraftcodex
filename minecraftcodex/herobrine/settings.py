@@ -132,6 +132,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'database',
     'blog',
+    'studio',
     'south'
 )
 

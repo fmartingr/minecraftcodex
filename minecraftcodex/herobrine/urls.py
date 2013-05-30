@@ -50,7 +50,7 @@ urlpatterns = patterns('',
         'blog.views.blog_item', name='blog_item'),
 
     # Admin only
-    url(r'^studio/', 'database.views.studio', name='studio'),
+    url(r'^studio/', 'studio.views.main', name='studio_main'),
 
     # Robots
     (r'^robots\.txt$', lambda r: HttpResponse("", mimetype="text/plain")),

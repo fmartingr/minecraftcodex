@@ -70,10 +70,15 @@ Thank you!
                             </li>
                         </ul>
                         <ul class="nav pull-right">
-                            <li class="pull-right {% if section == 'blog' %}active{% endif %}">
+                            {% if user.is_authenticated() %}
+                            <li class="{% if section == 'studio' %}active{% endif %}">
+                                <a href="{{ url('studio') }}">Studio</a>
+                            </li>
+                            {% endif %}
+                            <li class="{% if section == 'blog' %}active{% endif %}">
                                 <a href="{{ url('blog_list') }}">Blog</a>
                             </li>
-                            <li class="pull-right {% if section == 'about' %}active{% endif %}">
+                            <li class="{% if section == 'about' %}active{% endif %}">
                                 <a href="{{ url('aboutpage') }}">About the project</a>
                             </li>
                         </ul>
@@ -107,13 +112,13 @@ Thank you!
     </footer>
     {% if google_analytics and not user.is_authenticated() %}
     <script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-	ga('create', '{{ google_analytics }}', 'minecraftcodex.com');
-	ga('send', 'pageview');
+        ga('create', '{{ google_analytics }}', 'minecraftcodex.com');
+        ga('send', 'pageview');
     </script>
     {% endif %}
 {% endblock %}

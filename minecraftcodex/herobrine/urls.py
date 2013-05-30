@@ -49,6 +49,9 @@ urlpatterns = patterns('',
     url(r'^blog/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/(?P<slug>[\w\-]+)/$',
         'blog.views.blog_item', name='blog_item'),
 
+    # Admin only
+    url(r'^studio/', 'database.views.studio', name='studio'),
+
     # Robots
     (r'^robots\.txt$', lambda r: HttpResponse("", mimetype="text/plain")),
 

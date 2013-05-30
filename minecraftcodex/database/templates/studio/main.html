@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block header %}
+<header>
+    <div class="navbar navbar-inverse">
+        <div class="navbar-inner">
+            <div class="container" style="width: auto;">
+                <a class="brand" href="/">
+                    Minecraft Codex : Block Studio
+                </a>
+                {#<div class="nav-collapse">#}
+                <div>
+                    <ul class="nav">
+                        
+                    </ul>
+                    <ul class="nav pull-right">
+                        <li>
+                            <a href="{{ url('homepage') }}">
+                                <i class="icon-arrow-left"></i> Go back
+                            </a>
+                        </li>
+                    </ul>
+                </div><!-- /.nav-collapse -->
+            </div>
+        </div><!-- /navbar-inner -->
+    </div>      
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="studio-editor">
+    <div class="span3">
+        <div class="well">Left</div>
+    </div>
+    <div class="span6">
+        <div class="well">Canvas</div>
+    </div>
+    <div class="span3">
+        <div class="well">Right</div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

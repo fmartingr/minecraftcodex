@@ -68,6 +68,11 @@ window.onload = function() {
         var texture = $(this).attr('data-texture')
         mcstudio.changeTexture(texture)
     })
+
+    $('[data-action="toggle"]').click(function() {
+        var target = $(this).attr('data-target')
+        $(target).toggle('fast')
+    })
 }
 </script>
 {% endblock %}
@@ -87,8 +92,7 @@ window.onload = function() {
                                 <i class="icon-caret-down"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">New</a></li>
-                                <li><a href="#">Save</a></li>
+                                <li><a href="#" onclick="javascript:mcstudio.reset()">New</a></li>
                                 <li class="divider"></li>
                                 <li><a href="{{ url('homepage') }}">Exit</a></li>
                             </ul>
@@ -123,12 +127,11 @@ window.onload = function() {
 <div class="studio-workspace">
     <div class="panel panel-left">
         <div class="well">
-            <div class="texture-name pull-right"></div>
-            <h3 class="margin-none">Textures</h3>
-            <div class="text-center">
+            <div class="pull-right">
                 <input type="text" class="texture-search" placeholder="Search..." />
             </div>
-            <hr class="margin-none"/>
+            <h3 class="margin-none">Textures</h3>
+            <div class="clearfix"></div>
             <div class="texture-list">
             {% for item in textures %}
                 <div class="item" data-type="texture" data-name="{{ item.name }}"
@@ -140,6 +143,7 @@ window.onload = function() {
                 </div>
             {% endfor %}
             </div>
+            <div class="texture-name text-center"></div>
         </div>
     </div>
     <div class="panel panel-canvas">
@@ -149,57 +153,45 @@ window.onload = function() {
         <div class="well">
             <button type="button" 
                 class="btn btn-danger btn-small pull-right" 
-                data-toggle="collapse" data-target="#camera">
-                Hide
+                data-action="toggle" data-target="#camera">
+                Toggle
             </button>
-            <h3 class="margin-none">Camera</h3>
-            <div id="camera" class="collapse in">
-                <div class="text-right">
-                    Type: 
-                    <select name="select" class="flatui camera-type ">
-                        <option value="orthographic">Orthographic</option>
-                        <option value="perspective">Perspective</option>
-                    </select>
-                </div>
-
-            {#<label class="radio">
-                <span class="icons">
-                    <span class="first-icon fui-radio-unchecked"></span>
-                    <span class="second-icon fui-radio-checked"></span>
-                </span>
-                <input name="optionsRadiosDisabled" id="optionsRadios4" 
-                       value="option2" data-toggle="radio" type="radio">
-                Orthogonal
-            </label>
-            <label class="radio">
-                <span class="icons">
-                    <span class="first-icon fui-radio-unchecked"></span>
-                    <span class="second-icon fui-radio-checked"></span>
-                </span>
-                <input name="optionsRadiosDisabled" id="optionsRadios4" 
-                       value="option2" data-toggle="radio" type="radio">
-                Perpective
-            </label>#}
+            <h4 class="margin-none">Camera</h4>
+            <div class="clearfix"></div>
+            <div id="camera" class="text-right">
+                <hr />
+                Type: 
+                <select name="select" class="flatui camera-type ">
+                    <option value="orthographic">Orthographic</option>
+                    <option value="perspective">Perspective</option>
+                </select>
             </div>
-            <hr />
+        </div>
+        <div class="well">
             <button type="button" 
                 class="btn btn-danger btn-small pull-right" 
-                data-toggle="collapse" data-target="#objects">
-                Hide
+                data-action="toggle" data-target="#objects">
+                Toggle
             </button>
-            <h3 class="margin-none">Objects</h3>
-            <div id="objects" class="collapse in">
-                // TODO
+            <h4 class="margin-none">Objects</h4>
+            <div id="objects" class="text-right">
+                <hr />
+                <select name="select" class="flatui object">
+                </select>
+                <button class="btn btn-primary btn-round valing-top">
+                    <i class="icon-plus"></i>
+                </button>
             </div>
-            <hr />
+        </div>
+        <div class="well">
             <button type="button" 
                 class="btn btn-danger btn-small pull-right" 
-                data-toggle="collapse" data-target="#lights">
-                Hide
+                data-action="toggle" data-target="#lights">
+                Toggle
             </button>
-            <h3 class="margin-none">Lights</h3>
-            <div id="lights" class="collapse in">
-                // TODO
+            <h4 class="margin-none">Lights</h4>
+            <div id="lights">
+                <hr />
             </div>
         </div>
     </div>

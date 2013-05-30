@@ -63,6 +63,11 @@ window.onload = function() {
         mcstudio.onCameraChange($(this).val())
     })
     $("select.camera-type").change()
+
+    $('[data-studio="change-texture"]').click(function() {
+        var texture = $(this).attr('data-texture')
+        mcstudio.changeTexture(texture)
+    })
 }
 </script>
 {% endblock %}
@@ -126,7 +131,9 @@ window.onload = function() {
             <hr class="margin-none"/>
             <div class="texture-list">
             {% for item in textures %}
-                <div class="item" data-type="texture" data-name="{{ item.name }}">
+                <div class="item" data-type="texture" data-name="{{ item.name }}"
+                data-texture="/static/textures/{{ item.get_image() }}"
+                data-studio="change-texture">
                     <div class="codexicon x2">
                         <img src="/static/textures/{{ item.get_image(2) }}" />
                     </div>

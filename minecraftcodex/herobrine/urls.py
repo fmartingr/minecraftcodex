@@ -34,7 +34,7 @@ urlpatterns = patterns('',
         'database.views.version',
         name='version'
     ),
-    url(r'^versions/', 'database.views.versions', name='version_list'),
+    url(r'^versions/', 'database.views.versions', name='versions_list'),
 
     # Items
     url(r'^items/(?P<data_value>\d+)/', 'database.views.items_detail', name='items_detail'),

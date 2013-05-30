@@ -8,7 +8,7 @@
 <div class="container">
     <h1>Minecraft versions</h1>
     <hr />
-    <a href="/versions/"><i class="icon-arrow-left"></i> Go back</a>
+    <a href="{{ url('versions_list') }}"><i class="icon-arrow-left"></i> Go back</a>
     <h2>{% if status != 'release' %}{{ status }}{% endif %} {{ version_number }}</h2>
     {% if results > 1 %}
     <div class="alert alert-info">This version contains more than one release.</div>

@@ -1,0 +1,42 @@
+.studio-workspace
+    margin: 0 auto
+    width: $workspace-width
+
+    .panel
+        display: inline-block
+
+    .panel-canvas
+        display: block
+        margin: 0 auto
+        width: $canvas-width
+
+        .studio-canvas
+            width: $canvas-width
+            height: $canvas-width
+
+    .panel-left
+        left: 10px
+        position: fixed
+        top: $top-margin
+
+        width: $panel-width
+
+        .texture-list
+            max-height: 500px
+            overflow-x: hidden
+            overflow-y: scroll
+
+            .item
+                display: inline-block
+                width: (100/$textures-per-row) - 1%
+
+                &.hide
+                    display: none
+
+
+    .panel-right
+        position: fixed
+        right: 10px
+        top: $top-margin
+
+        width: $panel-width

@@ -1,9 +1,47 @@
 {% extends "layout.html" %}
 
 {% block head %}
+<link rel="stylesheet" href="/static/css/studio.css" />
 {{ super() }}
 <script type="text/javascript" src="/static/lib/jquery.2.0.0.js"></script>
+<script type="text/javascript" src="/static/lib/three.r58.js"></script>
+<script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap-transition.js"></script>
 <script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap-dropdown.js"></script>
+<script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap-collapse.js"></script>
+<script type="text/javascript" src="/static/js/studio.js"></script>
+<script defer="defer">
+window.onload = function() {
+    // Initialize Studio
+    mcstudio = window.Studio
+    mcstudio.init('.studio-canvas', 600, 600);
+
+    // Texture search
+    $('.texture-list .item').hover(function() {
+        $('div.texture-name').html($(this).attr('data-name'))
+    })
+
+    $('div.texture-list').on('mouseout', function() {
+        $('div.texture-name').html('')
+    })
+
+    $('input.texture-search').on('keyup', function(event) {
+        if (event.which == 13 || event.keyCode == 13) {
+            var value = $(this).val()
+            if (value == '') {
+                $('.texture-list .item').removeClass('hide')
+            } else {
+                $('.texture-list .item').addClass('hide')
+                $('.texture-list [data-name*="' + value + '"]').removeClass('hide')
+            }
+        }
+
+        if (event.which == 27 || event.keyCode == 27) {
+            $(this).val('')
+            $('.texture-list .item').removeClass('hide')
+        }
+    })
+}
+</script>
 {% endblock %}
 
 {% block header %}
@@ -12,7 +50,7 @@
         <div class="navbar-inner">
             <div class="container" style="width: auto;">
                 <a class="brand" href="/">
-                    Minecraft Codex : Studio
+                    MinecraftCodex : Studio
                 </a>
                 {#<div class="nav-collapse">#}
                 <div>
@@ -46,15 +84,63 @@
 {% endblock %}
 
 {% block content %}
-<div class="studio-editor">
-    <div class="span4">
-        <div class="well">Left</div>
+<div class="studio-workspace">
+    <div class="panel panel-left">
+        <div class="well">
+            <div class="texture-name pull-right"></div>
+            <h3 class="margin-none">Textures</h3>
+            <div class="text-center">
+                <input type="text" class="texture-search" placeholder="Search textures" />
+            </div>
+            <hr class="margin-none"/>
+            <div class="texture-list">
+            {% for item in textures %}
+                <div class="item" data-type="texture" data-name="{{ item.name }}">
+                    <div class="codexicon x2">
+                        <img src="/static/textures/{{ item.get_image(2) }}" />
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
     </div>
-    <div class="span8">
-        <div class="well">Canvas</div>
+    <div class="panel panel-canvas">
+        <div class="well">
+            <div class="studio-canvas"></div>
+        </div>
     </div>
-    <div class="span4">
-        <div class="well">Right</div>
+    <div class="panel panel-right">
+        <div class="well">
+            <button type="button" 
+                class="btn btn-danger btn-small pull-right" 
+                data-toggle="collapse" data-target="#camera">
+                Hide
+            </button>
+            <h3 class="margin-none">Camera</h3>
+            <div id="camera" class="collapse in">
+                here things
+            </div>
+            <hr />
+            <button type="button" 
+                class="btn btn-danger btn-small pull-right" 
+                data-toggle="collapse" data-target="#objects">
+                Hide
+            </button>
+            <h3 class="margin-none">Objects</h3>
+            <div id="objects" class="collapse in">
+                here things
+            </div>
+            <hr />
+            <button type="button" 
+                class="btn btn-danger btn-small pull-right" 
+                data-toggle="collapse" data-target="#lights">
+                Hide
+            </button>
+            <h3 class="margin-none">Lights</h3>
+            <div id="lights" class="collapse in">
+                here things
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

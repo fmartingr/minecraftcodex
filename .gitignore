@@ -1,17 +1,37 @@
+# Common
 .tox/
 *.pyc
 /virtualenv
-/minecraftcodex/herobrine/local_settings.py
 /MANIFEST
+
+# Configs
+/minecraftcodex/herobrine/local_settings.py
+
+# CSS
+
+# Database
 /minecraftcodex/database/static/lib/bootstrap.css
 /minecraftcodex/database/static/lib/responsive.css
+/minecraftcodex/database/static/css/*.css
+/minecraftcodex/database/static/js/*.js
+
+# Blog
+/minecraftcodex/blog/static/js/*.js
+
+# Studio
+/minecraftcodex/studio/static/css/*.css
+/minecraftcodex/studio/static/js/*.js
+
+# Utils
 /utils/miner/classes
 /utils/miner/jarfile
 /utils/miner/*.jar
 /utils/miner/*.json
-/minecraftcodex/database/static/css/*.css
-/minecraftcodex/database/static/js/*.js
-/minecraftcodex/blog/static/js/*.js
+
+# Backups and local development
 /*.json
 /dev_ddbb.sqlite
+
+# Shitty folders
 .sass-cache
+__pycache__

@@ -92,6 +92,7 @@ window.BlockRenderer = (model, textures, dom, width, height) ->
     @prepareLight = ->
         light = new THREE.DirectionalLight 0xffffff
         light.position.set(1, 20, 60).normalize()
+        light.intensity = 1.6
 
         _scene.add light
 

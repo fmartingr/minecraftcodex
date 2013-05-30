@@ -18,13 +18,19 @@
 <script type="text/javascript" src="/static/lib/flatui/js/flatui-radio.js"></script>
 <script type="text/javascript" src="/static/lib/flatui/js/flatui-checkbox.js"></script>
 <script type="text/javascript" src="/static/lib/flatui/js/bootstrap-select.js"></script>
+<!-- Handlebars -->
+<script type="text/javascript" src="/static/lib/handlebars.1.0.rc4.js"></script>
 <!-- Studio -->
 <script type="text/javascript" src="/static/js/studio.js"></script>
+<script type="text/javascript" src="/static/js/modals.js"></script>
 <script defer="defer">
 window.onload = function() {
     // Initialize Studio
-    mcstudio = window.Studio
-    mcstudio.init('.studio-canvas', 320, 240);
+    if (window.Studio) {
+        mcstudio = window.Studio
+        mcstudio.init('.studio-canvas', 320, 240);
+        window.modalManager.studio = mcstudio
+    }
 
     // Texture search
     $('.texture-list .item').hover(function() {
@@ -54,7 +60,7 @@ window.onload = function() {
     $("select.flatui").selectpicker({style: 'btn-primary', menuStyle: 'dropdown-inverse'});
 
     $("select.camera-type").change(function() {
-	mcstudio.onCameraChange($(this).val())
+        mcstudio.onCameraChange($(this).val())
     })
     $("select.camera-type").change()
 }
@@ -72,7 +78,7 @@ window.onload = function() {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle"
                                data-toggle="dropdown">
-				Creation
+                                Creation
                                 <i class="icon-caret-down"></i>
                             </a>
                             <ul class="dropdown-menu">
@@ -80,6 +86,17 @@ window.onload = function() {
                                 <li><a href="#">Save</a></li>
                                 <li class="divider"></li>
                                 <li><a href="{{ url('homepage') }}">Exit</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle"
+                               data-toggle="dropdown">
+                                Canvas
+                                <i class="icon-caret-down"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" 
+                                        onclick="javascript:modalManager.modal('changeCanvas')">Canvas size...</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -104,7 +121,7 @@ window.onload = function() {
             <div class="texture-name pull-right"></div>
             <h3 class="margin-none">Textures</h3>
             <div class="text-center">
-		<input type="text" class="texture-search" placeholder="Search..." />
+                <input type="text" class="texture-search" placeholder="Search..." />
             </div>
             <hr class="margin-none"/>
             <div class="texture-list">
@@ -119,7 +136,7 @@ window.onload = function() {
         </div>
     </div>
     <div class="panel panel-canvas">
-	<div class="studio-canvas"></div>
+        <div class="studio-canvas"></div>
     </div>
     <div class="panel panel-right">
         <div class="well">
@@ -130,13 +147,13 @@ window.onload = function() {
             </button>
             <h3 class="margin-none">Camera</h3>
             <div id="camera" class="collapse in">
-		<div class="text-right">
-		    Type:
-		    <select name="select" class="flatui camera-type ">
-			<option value="orthographic">Orthographic</option>
-			<option value="perspective">Perspective</option>
-		    </select>
-		</div>
+                <div class="text-right">
+                    Type: 
+                    <select name="select" class="flatui camera-type ">
+                        <option value="orthographic">Orthographic</option>
+                        <option value="perspective">Perspective</option>
+                    </select>
+                </div>
 
             {#<label class="radio">
                 <span class="icons">
@@ -165,7 +182,7 @@ window.onload = function() {
             </button>
             <h3 class="margin-none">Objects</h3>
             <div id="objects" class="collapse in">
-		// TODO
+                // TODO
             </div>
             <hr />
             <button type="button" 
@@ -175,11 +192,12 @@ window.onload = function() {
             </button>
             <h3 class="margin-none">Lights</h3>
             <div id="lights" class="collapse in">
-                here things
+                // TODO
             </div>
         </div>
     </div>
 </div>
+{% include "studio/modals.html" %}
 {% endblock %}
 
 {% block footer %}{% endblock %}

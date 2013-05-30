@@ -140,10 +140,14 @@ GRAPPELLI_ADMIN_TITLE = 'Minecraft Codex'
 AUTOCOMPLETE_LIMIT = 10
 
 # Jingo
-EXCLUDE_APPS = (
+JINGO_EXCLUDE_APPS = (
     'admin',
-    'debug_toolbar', # If installed
+    'admindocs',
+    'registration',
+    'context_processors',
+    'debug_toolbar',
 )
+
 JINJA_CONFIG = {
     'autoescape': True
 }

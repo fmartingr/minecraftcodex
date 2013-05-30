@@ -21,6 +21,7 @@
 # Studio
 /minecraftcodex/studio/static/css/*.css
 /minecraftcodex/studio/static/js/*.js
+/minecraftcodex/studio/static/lib/*.css
 
 # Utils
 /utils/miner/classes

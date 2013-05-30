@@ -1,19 +1,30 @@
 {% extends "layout.html" %}
 
 {% block head %}
+<!-- Styles -->
+<link rel="stylesheet" href="/static/css/style.css" />
+<link rel="stylesheet" href="/static/lib/flat-ui.css" />
 <link rel="stylesheet" href="/static/css/studio.css" />
-{{ super() }}
+<!-- jQuery -->
 <script type="text/javascript" src="/static/lib/jquery.2.0.0.js"></script>
+<!-- THREE -->
 <script type="text/javascript" src="/static/lib/three.r58.js"></script>
-<script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap-transition.js"></script>
+<!-- Bootstrap JS -->
+<!--<script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap-transition.js"></script>
 <script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap-dropdown.js"></script>
-<script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap-collapse.js"></script>
+<script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap-collapse.js"></script>-->
+<!-- Flat UI -->
+<script type="text/javascript" src="/static/lib/flatui/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/lib/flatui/js/flatui-radio.js"></script>
+<script type="text/javascript" src="/static/lib/flatui/js/flatui-checkbox.js"></script>
+<script type="text/javascript" src="/static/lib/flatui/js/bootstrap-select.js"></script>
+<!-- Studio -->
 <script type="text/javascript" src="/static/js/studio.js"></script>
 <script defer="defer">
 window.onload = function() {
     // Initialize Studio
     mcstudio = window.Studio
-    mcstudio.init('.studio-canvas', 600, 600);
+    mcstudio.init('.studio-canvas', 320, 240);
 
     // Texture search
     $('.texture-list .item').hover(function() {
@@ -40,6 +51,7 @@ window.onload = function() {
             $('.texture-list .item').removeClass('hide')
         }
     })
+    $("select.flatui").selectpicker({style: 'btn-primary', menuStyle: 'dropdown-inverse'});
 }
 </script>
 {% endblock %}
@@ -48,18 +60,15 @@ window.onload = function() {
 <header>
     <div class="navbar navbar-inverse">
         <div class="navbar-inner">
-            <div class="container" style="width: auto;">
-                <a class="brand" href="/">
-                    MinecraftCodex : Studio
-                </a>
-                {#<div class="nav-collapse">#}
+            <div class="container">
+                <a class="brand">MinecraftCodex : Studio</a>
                 <div>
                     <ul class="nav">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle"
                                data-toggle="dropdown">
                                 File
-                                <b class="caret"></b>
+                                <i class="icon-caret-down"></i>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">New</a></li>
@@ -76,7 +85,7 @@ window.onload = function() {
                             </a>
                         </li>
                     </ul>
-                </div><!-- /.nav-collapse -->
+                </div>
             </div>
         </div><!-- /navbar-inner -->
     </div>      
@@ -118,7 +127,30 @@ window.onload = function() {
             </button>
             <h3 class="margin-none">Camera</h3>
             <div id="camera" class="collapse in">
-                here things
+
+            <select name="select" class="flatui">
+                <option value="meh1">Orthogonal</option>
+                <option value="meh2">Perspective</option>
+            </select>
+
+            {#<label class="radio">
+                <span class="icons">
+                    <span class="first-icon fui-radio-unchecked"></span>
+                    <span class="second-icon fui-radio-checked"></span>
+                </span>
+                <input name="optionsRadiosDisabled" id="optionsRadios4" 
+                       value="option2" data-toggle="radio" type="radio">
+                Orthogonal
+            </label>
+            <label class="radio">
+                <span class="icons">
+                    <span class="first-icon fui-radio-unchecked"></span>
+                    <span class="second-icon fui-radio-checked"></span>
+                </span>
+                <input name="optionsRadiosDisabled" id="optionsRadios4" 
+                       value="option2" data-toggle="radio" type="radio">
+                Perpective
+            </label>#}
             </div>
             <hr />
             <button type="button" 

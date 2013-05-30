@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="container">
     <h1>Minecraft versions</h1>
     <hr />
     <a href="/versions/"><i class="icon-arrow-left"></i> Go back</a>
@@ -24,4 +25,5 @@
         <h3>Changelog</h3>
         <p>{{ version.changelog|nl2br }}</p>
     {% endfor %}
+</div>
 {% endblock %}

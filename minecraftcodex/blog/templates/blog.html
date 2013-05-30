@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<div class="container">
     <h1>Blog</h1>
     {% for item in page.object_list %}
     <hr />
@@ -30,4 +31,5 @@
         </ul>
     </div>
     {% endif %}
+</div>
 {% endblock %}

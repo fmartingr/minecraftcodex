@@ -2,7 +2,7 @@
 
 {% block head %}
 {{ super() }}
-{% if user.is_authenticated %}
+{% if user.is_authenticated() %}
 <script src="http://www.html5canvastutorials.com/libraries/three.min.js"></script>
 <script type="text/javascript" src="/static/js/blockRenderer.js"></script>
 {% endif %}
@@ -27,7 +27,7 @@
                     {% endif %}
                 </div>
             </div>
-            {% if user.is_authenticated %}
+            {% if user.is_authenticated() %}
             <script defer="defer" type="text/javascript">
                 block = BlockRenderer('block', {side:'/static/textures/{{ item.main_texture.get_image() }}'}, '.block-render', 'auto', 'auto');
             </script>

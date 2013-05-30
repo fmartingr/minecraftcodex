@@ -12,17 +12,23 @@ def home(request):
 
 def versions(request):
     section = 'versions'
+    show_options = ['list', 'squares']
+    show = 'list'
     versions = Version.objects.filter(snapshot=False).\
         order_by('-date', '-version_number')
-    paginator = Paginator(versions, 50)
+    paginator = Paginator(versions, 48)
     page_number = 1
 
     if 'page' in request.GET:
         page_number = int(request.GET['page'])
+    if 'show' in request.GET:
+        if request.GET['show'] in show_options:
+            show = request.GET['show']
 
     page = paginator.page(page_number)
 
     data = {
+        'show': show,
         'section': section,
         'page': page,
         'page_number': page_number,

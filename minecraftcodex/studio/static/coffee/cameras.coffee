@@ -15,6 +15,10 @@ class Camera
         @_position.y += y
         @_position.z += z
         @_self.position = @_position
+        $('input.camera-x').val @_position.x 
+        $('input.camera-y').val @_position.y 
+        $('input.camera-z').val @_position.z 
+
 
 class orthograpicCamera extends Camera
     _self: null

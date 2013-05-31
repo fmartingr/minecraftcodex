@@ -5,7 +5,18 @@ class Camera
     _near: 1
     _far: 1000
 
-class orthograpicCamera
+    _position:
+        x: 0
+        y: 0
+        z: 0
+
+    move: (x, y, z) ->
+        @_position.x += x
+        @_position.y += y
+        @_position.z += z
+        @_self.position = @_position
+
+class orthograpicCamera extends Camera
     _self: null
     _left: 0
     _right: 0
@@ -26,7 +37,7 @@ class orthograpicCamera
         @_self = camera
 
 
-class perspectiveCamera
+class perspectiveCamera extends Camera
     _fov: 45
     _aspectRatio: 0
     _near: 1

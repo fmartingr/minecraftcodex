@@ -19,6 +19,56 @@ Studio =
     objects: []
     _objects: {}
     
+    # OBJECT MANAGER
+    objectManager:
+        add: (object) ->
+            if object of window.StudioObjects
+                obj = new window.StudioObjects[object]
+                obj.init
+                    x: 16
+                    y: 16
+                    z: 16
+                obj._id = @studio.objects.length + 1
+                @studio.objects.push 
+                    type: object
+                    id: obj._id
+
+                @studio._objects[obj._id] = obj
+                @studio.scene.add @studio._objects[obj._id]._object
+
+                context =
+                    object_id: obj._id
+                    name: obj.name
+
+                template = Handlebars.compile $('#entity-template-simple').html()
+                html = template(context)
+                $('.entities-list').append(html)
+                @setHandlers $(".entities-list .entity-#{obj._id}")
+
+
+        list: ->
+            return @studio._objects
+
+        setHandlers: (dom) ->
+            _this = @
+            dom.find('.btn-edit').click ->
+                console.log 'edit'
+
+            dom.find('.btn-remove').click ->
+                _this.remove $(@).parents('[data-objectid]').attr('data-objectid')
+
+            dom.find('.check-visible').change ->
+                console.log 'toggle!'
+
+        remove: (object_id) ->
+            if object_id of @studio._objects
+                obj = @studio._objects[object_id]
+                @studio.scene.remove obj._object
+                delete @studio._objects[object_id]
+                $(".entities-list .entity-#{object_id}").remove()
+
+
+
     # Methods
     checkWebGLsupport: ->
         return !!window.WebGLRenderingContext;
@@ -52,18 +102,6 @@ Studio =
 
         @onCameraChange @_cameraType
 
-    # Tests
-    changeTexture: (path) ->
-        @scene.remove @object
-
-        texture = new THREE.ImageUtils.loadTexture path
-        texture.minFilter = THREE.NearestFilter
-        texture.magFilter = THREE.NearestFilter
-        material = new THREE.MeshLambertMaterial map: texture
-        @object = new THREE.Mesh new THREE.CubeGeometry(16, 16, 16), material
-        @object.rotation.set Math.PI/6, (Math.PI/4)*-1, 0
-        @scene.add @object
-
     reset: ->
         cancelAnimationFrame @_animationFrame
         @renderer.domElement.remove()
@@ -73,6 +111,7 @@ Studio =
         if not @checkWebGLsupport()
             return false
 
+        # Renderer
         @domElement = document.querySelector dom
         @_dom = dom
 
@@ -81,13 +120,24 @@ Studio =
 
         @domElement.appendChild @renderer.domElement
 
+        # Scene
         @scene = new THREE.Scene()
+
+        # Populate
+
+        # Add all objects to object select
+        objectsDom = $('select.object-list')
+        for i of window.StudioObjects
+            obj = window.StudioObjects[i]
+            objectsDom.append "<option value=\"#{i}\">#{obj.name}</option>"
 
         # test
         @light = new THREE.DirectionalLight 0xffffff
         @light.position.set(1, 20, 60).normalize()
         @light.intensity = 1.6
         @scene.add @light
+
+        @objectManager.studio = @
 
         #@object = new THREE.Mesh new THREE.CubeGeometry(16, 16, 16), new THREE.MeshNormalMaterial()
 

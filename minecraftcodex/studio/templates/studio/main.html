@@ -21,6 +21,7 @@
 <!-- Handlebars -->
 <script type="text/javascript" src="/static/lib/handlebars.1.0.rc4.js"></script>
 <!-- Studio -->
+<script type="text/javascript" src="/static/js/objects.js"></script>
 <script type="text/javascript" src="/static/js/cameras.js"></script>
 <script type="text/javascript" src="/static/js/studio.js"></script>
 <script type="text/javascript" src="/static/js/modals.js"></script>
@@ -83,7 +84,7 @@
             <h3 class="margin-none">Textures</h3>
             <div class="clearfix"></div>
             <div class="texture-list">
-            {% for item in textures %}
+            {#{% for item in textures %}
                 <div class="item" data-type="texture" data-name="{{ item.name }}"
                 data-texture="/static/textures/{{ item.get_image() }}"
                 data-studio="change-texture">
@@ -91,7 +92,7 @@
                         <img src="/static/textures/{{ item.get_image(2) }}" />
                     </div>
                 </div>
-            {% endfor %}
+            {% endfor %}#}
             </div>
             <div class="text-center"><span class="texture-name badge">Mouseover a texture</span></div>
         </div>
@@ -137,11 +138,15 @@
             <h4 class="margin-none">Objects</h4>
             <div id="objects" class="text-right">
                 <hr />
-                <select name="select" class="flatui object">
+                <select name="object-list" class="flatui object-list">
                 </select>
-                <button class="btn btn-primary btn-round valing-top">
+                <button class="btn btn-primary btn-addobject btn-round valing-top">
                     <i class="icon-plus"></i>
                 </button>
+                <table class="table">
+                    <tbody class="entities-list">
+                    </tbody>
+                </table>
             </div>
         </div>
         <div class="well">
@@ -158,6 +163,7 @@
     </div>
 </div>
 {% include "studio/modals.html" %}
+{% include "studio/templates.html" %}
 {% endblock %}
 
 {% block footer %}{% endblock %}

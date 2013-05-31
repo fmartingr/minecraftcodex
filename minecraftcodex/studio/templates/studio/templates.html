@@ -1,0 +1,19 @@
+<!-- STUDIO TEMPLATES -->
+
+<!-- TMPL -->
+<script id="entity-template-simple" type="text/x-handlebars-template">
+    <tr class="entity-{{ '{{ object_id }}' }}" data-objectid="{{ '{{ object_id }}' }}">
+        <td>
+            <input type="checkbox" class="check-visible" value="visible">
+        </td>
+        <td>
+            <span class="label">{{ '{{ object_id }}' }}:{{ '{{ name }}' }}</span>
+        </td>
+        <td>
+            <div class="text-right">
+                <button class="btn btn-info btn-small btn-edit">Edit</button>
+                <button class="btn btn-danger btn-small btn-remove">Remove</button>
+            </div>
+        </td>
+    </tr>
+</script>

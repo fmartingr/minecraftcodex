@@ -1,7 +1,7 @@
 window.onload = ->
     # Studio
     if window.Studio
-        window.Studio.init '.studio-canvas', 320, 240
+        window.Studio.init '.studio-canvas', 640, 480
         window.modalManager.studio = window.Studio
 
     # Textures
@@ -43,7 +43,7 @@ window.onload = ->
         target = $(this).attr 'data-target'
         $(target).toggle 'fast'
 
-    # TESTS
-    $('[data-studio="change-texture"]').click ->
-        texture = $(this).attr('data-texture')
-        window.Studio.changeTexture texture
+    # Objects
+    $('.btn-addobject').click ->
+        obj = $('.object-list').val()
+        window.Studio.objectManager.add obj

@@ -34,11 +34,11 @@ window.onload = function() {
 
     // Texture search
     $('.texture-list .item').hover(function() {
-        $('div.texture-name').html($(this).attr('data-name'))
+        $('.texture-name').html($(this).attr('data-name'))
     })
 
     $('div.texture-list').on('mouseout', function() {
-        $('div.texture-name').html('')
+        $('.texture-name').html('Mouseover a texture')
     })
 
     $('input.texture-search').on('keyup', function(event) {
@@ -59,7 +59,7 @@ window.onload = function() {
     })
     $("select.flatui").selectpicker({style: 'btn-primary', menuStyle: 'dropdown-inverse'});
 
-    $("select.camera-type").change(function() {
+    $('input[name="cameraType"]').change(function() {
         mcstudio.onCameraChange($(this).val())
     })
     $("select.camera-type").change()
@@ -143,7 +143,7 @@ window.onload = function() {
                 </div>
             {% endfor %}
             </div>
-            <div class="texture-name text-center"></div>
+            <div class="text-center"><span class="texture-name badge">Mouseover a texture</span></div>
         </div>
     </div>
     <div class="panel panel-canvas">
@@ -160,11 +160,22 @@ window.onload = function() {
             <div class="clearfix"></div>
             <div id="camera" class="text-right">
                 <hr />
-                Type: 
-                <select name="select" class="flatui camera-type ">
-                    <option value="orthographic">Orthographic</option>
-                    <option value="perspective">Perspective</option>
-                </select>
+                <div class="row-fluid">
+                    <div class="span6 text-center">
+                        <span class="radio">
+                            <input type="radio" name="cameraType" value="perspective"
+                            data-toggle="radio">
+                            Perspective
+                        </span>
+                    </div>
+                    <div class="span6 text-center">
+                        <span class="radio">
+                            <input type="radio" name="cameraType" value="orthographic"
+                            data-toggle="radio">
+                            Orthograpic
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="well">

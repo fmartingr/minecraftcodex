@@ -23,58 +23,7 @@
 <!-- Studio -->
 <script type="text/javascript" src="/static/js/studio.js"></script>
 <script type="text/javascript" src="/static/js/modals.js"></script>
-<script defer="defer">
-window.onload = function() {
-    // Initialize Studio
-    if (window.Studio) {
-        mcstudio = window.Studio
-        mcstudio.init('.studio-canvas', 320, 240);
-        window.modalManager.studio = mcstudio
-    }
-
-    // Texture search
-    $('.texture-list .item').hover(function() {
-        $('.texture-name').html($(this).attr('data-name'))
-    })
-
-    $('div.texture-list').on('mouseout', function() {
-        $('.texture-name').html('Mouseover a texture')
-    })
-
-    $('input.texture-search').on('keyup', function(event) {
-        if (event.which == 13 || event.keyCode == 13) {
-            var value = $(this).val()
-            if (value == '') {
-                $('.texture-list .item').removeClass('hide')
-            } else {
-                $('.texture-list .item').addClass('hide')
-                $('.texture-list [data-name*="' + value + '"]').removeClass('hide')
-            }
-        }
-
-        if (event.which == 27 || event.keyCode == 27) {
-            $(this).val('')
-            $('.texture-list .item').removeClass('hide')
-        }
-    })
-    $("select.flatui").selectpicker({style: 'btn-primary', menuStyle: 'dropdown-inverse'});
-
-    $('input[name="cameraType"]').change(function() {
-        mcstudio.onCameraChange($(this).val())
-    })
-    $("select.camera-type").change()
-
-    $('[data-studio="change-texture"]').click(function() {
-        var texture = $(this).attr('data-texture')
-        mcstudio.changeTexture(texture)
-    })
-
-    $('[data-action="toggle"]').click(function() {
-        var target = $(this).attr('data-target')
-        $(target).toggle('fast')
-    })
-}
-</script>
+<script defer="defer" type="text/javascript" src="/static/js/loader.js"></script>
 {% endblock %}
 
 {% block header %}

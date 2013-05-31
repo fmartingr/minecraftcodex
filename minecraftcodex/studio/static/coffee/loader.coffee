@@ -8,8 +8,8 @@ window.onload = ->
     $('.texture-list .item').hover ->
         $('.texture-name').html $(@).attr('data-name')
 
-    $('div.texture-list').on 'onmouseout', ->
-        $('.texture.name').html 'Mouseover a texture'
+    $('.texture-list').on 'mouseout', ->
+        $('.texture-name').html 'Mouseover a texture'
 
     $('input.texture-search').on 'keyup', (event) ->
         # [enter] -> do search

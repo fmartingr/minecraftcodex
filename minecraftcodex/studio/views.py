@@ -7,7 +7,7 @@ from django.core import serializers
 
 
 def main(request):
-    textures = Texture.objects.all()
+    textures = Texture.objects.filter(type='blocks')
 
     data = {
         'textures': textures

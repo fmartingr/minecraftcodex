@@ -50,6 +50,7 @@ urlpatterns = patterns('',
         'blog.views.blog_item', name='blog_item'),
 
     # Admin only
+    url(r'^studio/textures/$', 'studio.views.textures', name='studio_textures'),
     url(r'^studio/', 'studio.views.main', name='studio_main'),
 
     # Robots

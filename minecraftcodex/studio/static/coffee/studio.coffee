@@ -77,7 +77,9 @@ Studio =
     onCameraChange: (cameraType) ->
         if "#{cameraType}Camera" of window.StudioCameras
             @_cameraType = cameraType
-            @camera = window.StudioCameras["#{cameraType}Camera"].init @width, @height
+            @camera = new window.StudioCameras["#{cameraType}Camera"]
+            @camera.init @width, @height
+            @_camera = @camera._self
             if not @animating
                 @animate()
 
@@ -86,7 +88,7 @@ Studio =
         if @scene and @camera
             if not @animating
                 @animating = true
-            @renderer.render @scene, @camera
+            @renderer.render @scene, @_camera
 
             @_animationFrame = requestAnimationFrame =>
                 @animate()

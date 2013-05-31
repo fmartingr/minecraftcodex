@@ -1,7 +1,11 @@
 #
 #   CAMERAS
 #
-orthograpicCamera = 
+class Camera
+    _near: 1
+    _far: 1000
+
+class orthograpicCamera
     _self: null
     _left: 0
     _right: 0
@@ -22,7 +26,7 @@ orthograpicCamera =
         @_self = camera
 
 
-perspectiveCamera = 
+class perspectiveCamera
     _fov: 45
     _aspectRatio: 0
     _near: 1

@@ -40,9 +40,12 @@ urlpatterns = patterns('',
     url(r'^items/(?P<data_value>\d+)/', 'database.views.items_detail', name='items_detail'),
     url(r'^items/', 'database.views.items', name='items_list'),
 
-    # Items
+    # Blocks
     url(r'^blocks/(?P<data_value>\d+)/', 'database.views.blocks_detail', name='blocks_detail'),
     url(r'^blocks/', 'database.views.blocks', name='blocks_list'),
+
+    # Achievements
+    url(r'^achievements/$', 'database.views.achievements', name='achievements'),
 
     # Blog
     url(r'^blog/$', 'blog.views.blog', name='blog_list'),

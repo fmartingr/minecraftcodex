@@ -15,10 +15,18 @@ class Camera
         @_position.y += y
         @_position.z += z
         @_self.position = @_position
-        $('input.camera-x').val @_position.x 
-        $('input.camera-y').val @_position.y 
-        $('input.camera-z').val @_position.z 
+        $('input.camera-x').val @_position.x
+        $('input.camera-y').val @_position.y
+        $('input.camera-z').val @_position.z
 
+    goTo: (x, y, z) ->
+        @_position.x = x
+        @_position.y = y
+        @_position.z = z
+        @_self.position = @_position
+        $('input.camera-x').val @_position.x
+        $('input.camera-y').val @_position.y
+        $('input.camera-z').val @_position.z
 
 class orthograpicCamera extends Camera
     _self: null
@@ -39,6 +47,7 @@ class orthograpicCamera extends Camera
         @_far = width * 2
         camera = new THREE.OrthographicCamera @_left, @_right, @_top, @_bottom, @_near, @_far
         @_self = camera
+        @goTo 0, 0, 0
 
 
 class perspectiveCamera extends Camera
@@ -50,8 +59,8 @@ class perspectiveCamera extends Camera
     init: (width, height) ->
         @_aspectRatio = width / height
         camera = new THREE.PerspectiveCamera @_fov, @_aspectRatio, @_near, @_far
-        camera.position.z = 40
         @_self = camera
+        @goTo 0, 0, 40
 
 
 window.StudioCameras =

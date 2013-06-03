@@ -36,6 +36,24 @@ window.onload = ->
         camera = $(@).val()
         window.Studio.onCameraChange camera
 
+    $('.btn-camera-x-plus').click ->
+        window.Studio.camera.move 1, 0, 0
+
+    $('.btn-camera-x-minus').click ->
+        window.Studio.camera.move -1, 0, 0
+
+    $('.btn-camera-y-plus').click ->
+        window.Studio.camera.move 0, 1, 0
+
+    $('.btn-camera-y-minus').click ->
+        window.Studio.camera.move 0, -1, 0
+
+    $('.btn-camera-z-plus').click ->
+        window.Studio.camera.move 0, 0, 1
+
+    $('.btn-camera-z-minus').click ->
+        window.Studio.camera.move 0, 0, -1
+
     $(':radio[name="cameraType"]:first').click()
 
     # Toggles

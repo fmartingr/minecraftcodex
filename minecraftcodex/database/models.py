@@ -379,3 +379,41 @@ class LanguageStringAdmin(admin.ModelAdmin):
     search_fields = ('key', 'value', )
 
 admin.site.register(LanguageString, LanguageStringAdmin)
+
+
+###
+#   ACHIEVEMENTS
+###
+class Achievement(models.Model):
+    internal_name = models.CharField(max_length=128)
+    internal_id = models.IntegerField(default=0)
+
+    def name(self):
+        result = self.internal_name
+        try:
+            string = LanguageString.objects.get(
+                language=14,
+                key='achievement.%s' % self.internal_name
+            )
+            result = string.value
+        except:
+            pass
+        return result
+
+    def description(self):
+        result = self.internal_name
+        try:
+            string = LanguageString.objects.get(
+                language=14,
+                key='achievement.%s.desc' % self.internal_name
+            )
+            result = string.value
+        except:
+            pass
+        return result
+
+class AchievementAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description', )
+    search_fields = ('internalName', 'description', )
+
+admin.site.register(Achievement, AchievementAdmin)

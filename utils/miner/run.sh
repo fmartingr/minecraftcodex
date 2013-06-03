@@ -9,3 +9,5 @@ python items.py
 python blocks.py
 
 python languages.py
+
+python achievements.py

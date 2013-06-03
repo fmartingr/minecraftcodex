@@ -80,3 +80,23 @@ class GameLanguage(object):
     def add_string(self, key, value):
         if key not in self.strings:
             self.strings[key] = value
+
+###
+#   ACHIEVEMENTS
+###
+class GameAchievement(object):
+    def __init__(self, internal_id, name, *args):
+        self.id = int(internal_id)
+        self.name = name
+
+    def method(self, *args):
+        return self
+
+    def __getattr__(self, *args):
+        return self.method
+
+    def __str__(self):
+        return "<Achievement (%d: '%s')>" % (
+            self.id,
+            self.name
+        )

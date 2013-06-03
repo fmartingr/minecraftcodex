@@ -100,3 +100,24 @@ class GameAchievement(object):
             self.id,
             self.name
         )
+
+
+###
+#   MOBS
+###
+class GameMob(object):
+    def __init__(self, name, full, *args):
+        self.name = name
+        self.full = full
+
+    def method(self, *args):
+        return self
+
+    def __getattr__(self, *args):
+        return self.method
+
+    def __str__(self):
+        return "<Mob (%s: '%s')>" % (
+            self.name,
+            self.full
+        )

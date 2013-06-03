@@ -33,7 +33,6 @@ LANGUAGES_MASTER_KEYS = [
     'language.code',
 ]
 
-
 ###
 #   ACHIEVEMENTS
 ###
@@ -41,6 +40,12 @@ ACHIEVEMENTS_FILES = []
 ACHIEVEMENTS_JAVA_KEYWORDS = ['onARail', 'flyPig']
 ACHIEVEMENTS_PATTERN = "new (?P<code>[a-z]{1,2}\((?P<id>[1-9]{1,3})\, \"(?P<name>\w+)\".*\))"
 
+###
+#   MOBS
+###
+MOBS_FILES = []
+MOBS_JAVA_KEYWORDS = ['mob/']
+MOBS_PATTERN = '(?P<full>\"mob/(?P<name>[a-zA-Z0-9]+)\.png\")'
 
 ###
 #   BLACKLIST

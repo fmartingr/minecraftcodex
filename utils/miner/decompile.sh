@@ -4,7 +4,7 @@
 JARFILE=$1
 
 if [ "$JARFILE" != "" ]; then
-    echo "=> Phase: JAR file"
+    echo "[] Preparing files from JAR: $JARFILE []"
     # Remove old
     rm -rf ./jarfile ./classes
 
@@ -13,18 +13,18 @@ if [ "$JARFILE" != "" ]; then
     mkdir classes
 
     # Decompress the jarfile into the jarfile folder
-    echo "   => Unpackaging jar file"
+    echo "    Unpackaging jar file"
     unzip -qq $JARFILE -d ./jarfile
 
     # Find all the classes and pass then through JAD
     #find . -type d -name *.class -exec rm -rf {} \;
-    echo "   => Decompiling classes"
+    echo "    Decompiling classes"
     ls ./jarfile/*.class | xargs -n1 ./tools/jad/jad -sjava -dclasses &> /dev/null
 
     # Remove classfiles and left only other files
-    echo "   => Cleaning"
+    echo "    Cleaning"
     rm ./jarfile/*.class
 else
-    echo "No jarfile specified."
-    exit
+    echo "[!] No jarfile specified!"
+    exit -1
 fi

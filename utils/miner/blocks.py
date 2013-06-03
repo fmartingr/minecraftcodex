@@ -7,12 +7,12 @@ import os
 import sys
 
 # Tool libs
-from utils import run, sanitize
+import utils
 import conf
 from objects import GameBlock
 
 
-print("=> Phase: blocks")
+utils.title('BLOCKS')
 if conf.SAVE:
     sys.path.append('../../minecraftcodex')
     os.environ['DJANGO_SETTINGS_MODULE'] = 'local_settings'
@@ -26,10 +26,10 @@ BLOCKS = []
 ###
 #   LOOK FOR CORRECT JAVA FILES
 ###
-print("  => Looking for java files...")
-print("     Keywords: %s" % ', '.join(conf.BLOCKS_JAVA_KEYWORDS))
+utils.sub("Looking for java files...")
+#utils.sub("Keywords: %s" % ', '.join(conf.BLOCKS_JAVA_KEYWORDS), end='\n')
 for keyword in conf.BLOCKS_JAVA_KEYWORDS:
-    command = run('grep \'%s\' ./classes/*' % keyword)
+    command = utils.run('grep \'%s\' ./classes/*' % keyword)
     lines = []
     [lines.append(x) for x in command]
     lines = ''.join(lines).split('\n')
@@ -37,13 +37,15 @@ for keyword in conf.BLOCKS_JAVA_KEYWORDS:
         if result and result is not '':
             java_file = os.path.basename(result.strip().split()[0][:-1])
             if java_file not in conf.BLOCKS_FILES:
-                print("     Found: %s" % java_file)
+                utils.echo("%s " % java_file, end='')
                 conf.BLOCKS_FILES.append(java_file)
+
+utils.echo('\r')
 
 ###
 #   GET ITEMS INFO FROM CLASSFILE
 ###
-print("   => Mining blocks...")
+utils.sub('Looking for dataz', end='\n')
 
 # Old items for final count
 try:
@@ -67,7 +69,7 @@ for java_file in conf.BLOCKS_FILES:
                 if conf.DEBUG:
                     print("Line: " + item['code'])
 
-                item['code'] = sanitize(item['code'])
+                item['code'] = utils.sanitize(item['code'])
 
                 if conf.DEBUG:
                     print("Sanitize: " + item['code'])
@@ -110,21 +112,20 @@ if conf.SAVE:
         obj.save()
 
 # Print the miner summary and compile the new old data
-print('   => Summary')
 new_old_data = {}
 new_old_data['list'] = []
 [new_old_data['list'].append(x.name) for x in BLOCKS]
 new_blocks = len(new_old_data['list'])-len(OLD_BLOCKS['list'])
-print('   Fetched %d blocks (%d new)' % (len(new_old_data['list']), new_blocks))
-if new_blocks > 0:
-    print('   Modifications:')
+utils.info('Fetched %d blocks (%d new)' % (len(new_old_data['list']), new_blocks))
+if new_blocks != 0:
+    utils.sub('Modifications:', end='\n')
     for item in BLOCKS:
         if item.name not in OLD_BLOCKS['list']:
-            print('  + %s' % item.name)
+            utils.sub(' + %s' % item.name, end='\n', color=utils.colors.GREEN)
 
     for item in OLD_BLOCKS['list']:
         if item not in new_old_data['list']:
-            print('  - %s' % item)
+            utils.sub(' - %s' % item, end='\n', color=utils.colors.RED)
 
 oldblocks = open('blocks.json', 'w')
 oldblocks.write(json.dumps(new_old_data))

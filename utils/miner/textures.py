@@ -8,10 +8,11 @@ import json
 from PIL import Image
 
 # Tool libs
+import utils
 import conf
 from objects import GameTexture
 
-print("=> Phase: textures")
+utils.title("TEXTURES")
 
 if conf.SAVE:
     path.append('../../minecraftcodex')
@@ -73,21 +74,22 @@ if conf.SAVE:
             )
             item.save()
 
-print('   => Summary')
+
+# SUMMARY
 new_old_data = {}
 new_old_data['list'] = []
 [new_old_data['list'].append(x.name) for x in TEXTURES]
 new_items = len(new_old_data['list'])-len(OLD_TEXTURES['list'])
-print('   Fetched %d textures (%d new)' % (len(TEXTURES), new_items))
-if new_items > 0:
-    print('   Modifications:')
+utils.info('Fetched %d textures (%d new)' % (len(TEXTURES), new_items))
+if new_items != 0:
+    utils.sub('Modifications', end='\n')
     for item in TEXTURES:
         if item.name not in OLD_TEXTURES['list']:
-            print('  + %s' % item.name)
+            utils.sub(' + %s' % item.name, end='\n', color=utils.colors.GREEN)
 
     for item in OLD_TEXTURES['list']:
         if item not in new_old_data['list']:
-            print('  - %s' % item)
+            utils.sub(' - %s' % item, end='\n', color=utils.colors.RED)
 
 olditems = open('textures.json', 'w')
 olditems.write(json.dumps(new_old_data))

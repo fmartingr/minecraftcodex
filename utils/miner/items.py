@@ -7,12 +7,12 @@ import os
 import sys
 
 # Tool libs
-from utils import run, sanitize
+import utils
 import conf
 from objects import GameItem
 
 
-print("=> Phase: items")
+utils.title("ITEMS")
 
 if conf.SAVE:
     sys.path.append('../../minecraftcodex')
@@ -27,21 +27,23 @@ ITEMS = []
 ###
 #   LOOK FOR CORRECT JAVA FILES
 ###
-print("   => Looking for java files...")
-print("     Keywords: %s" % ', '.join(conf.ITEMS_JAVA_KEYWORDS))
+utils.sub("Looking for java files: ")
+#utils.sub("Keywords: %s" % ', '.join(conf.ITEMS_JAVA_KEYWORDS), end='\n')
 for keyword in conf.ITEMS_JAVA_KEYWORDS:
-    cmd = run('grep \'%s\' ./classes/*' % keyword)
+    cmd = utils.run('grep \'%s\' ./classes/*' % keyword)
     for result in cmd:
         if result and result is not '':
             java_file = os.path.basename(result.strip().split()[0][:-1])
             if java_file not in conf.ITEMS_FILES:
-                print("     Found: %s" % java_file)
+                utils.echo("%s " % java_file, end='')
                 conf.ITEMS_FILES.append(java_file)
+
+utils.echo('\r')
 
 ###
 #   GET ITEMS INFO FROM CLASSFILE
 ###
-print("   => Mining items...")
+utils.sub('Looking for dataz', end='\n')
 
 # Old items for final count
 try:
@@ -65,7 +67,7 @@ for java_file in conf.ITEMS_FILES:
                 if conf.DEBUG:
                     print("Line: " + item['code'])
 
-                item['code'] = sanitize(item['code'])
+                item['code'] = utils.sanitize(item['code'])
 
                 if conf.DEBUG:
                     print("Sanitize: " + item['code'])
@@ -109,21 +111,20 @@ if conf.SAVE:
 
 
 # Print the miner summary and compile the new old data
-print('   => Summary')
 new_old_data = {}
 new_old_data['list'] = []
 [new_old_data['list'].append(x.name) for x in ITEMS]
 new_items = len(new_old_data['list'])-len(OLD_ITEMS['list'])
-print('   Fetched %d items (%d new)' % (len(ITEMS), new_items))
-if new_items > 0:
-    print('   Modifications:')
+utils.info('Fetched %d items (%d new)' % (len(ITEMS), new_items))
+if new_items != 0:
+    utils.sub('Modifications', end='\n')
     for item in ITEMS:
         if item.name not in OLD_ITEMS['list']:
-            print('  + %s' % item.name)
+            utils.sub(' + %s' % item.name, end='\n', color=utils.colors.GREEN)
 
     for item in OLD_ITEMS['list']:
         if item not in new_old_data['list']:
-            print('  - %s' % item)
+            utils.sub(' - %s' % item, end='\n', color=utils.colors.RED)
 
 olditems = open('items.json', 'w')
 olditems.write(json.dumps(new_old_data))

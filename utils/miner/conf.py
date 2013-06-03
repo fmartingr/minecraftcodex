@@ -1,7 +1,7 @@
 DEBUG = False
 
 # Save to database?
-SAVE = True
+SAVE = False
 
 ###
 #   TEXTURES

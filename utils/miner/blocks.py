@@ -116,7 +116,7 @@ new_old_data = {}
 new_old_data['list'] = []
 [new_old_data['list'].append(x.name) for x in BLOCKS]
 new_blocks = len(new_old_data['list'])-len(OLD_BLOCKS['list'])
-utils.info('Fetched %d blocks (%d new)' % (len(new_old_data['list']), new_blocks))
+utils.info('Found %d blocks (%d new)' % (len(new_old_data['list']), new_blocks))
 if new_blocks != 0:
     utils.sub('Modifications:', end='\n')
     for item in BLOCKS:

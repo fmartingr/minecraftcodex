@@ -115,7 +115,7 @@ new_old_data = {}
 new_old_data['list'] = []
 [new_old_data['list'].append(x.name) for x in ITEMS]
 new_items = len(new_old_data['list'])-len(OLD_ITEMS['list'])
-utils.info('Fetched %d items (%d new)' % (len(ITEMS), new_items))
+utils.info('Found %d items (%d new)' % (len(ITEMS), new_items))
 if new_items != 0:
     utils.sub('Modifications', end='\n')
     for item in ITEMS:

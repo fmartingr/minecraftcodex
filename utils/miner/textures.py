@@ -80,7 +80,7 @@ new_old_data = {}
 new_old_data['list'] = []
 [new_old_data['list'].append(x.name) for x in TEXTURES]
 new_items = len(new_old_data['list'])-len(OLD_TEXTURES['list'])
-utils.info('Fetched %d textures (%d new)' % (len(TEXTURES), new_items))
+utils.info('Found %d textures (%d new)' % (len(TEXTURES), new_items))
 if new_items != 0:
     utils.sub('Modifications', end='\n')
     for item in TEXTURES:

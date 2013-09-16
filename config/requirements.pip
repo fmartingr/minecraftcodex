@@ -1,5 +1,5 @@
-Django==1.5.1
+Django==1.5.4
 jingo==0.6.1
-django-grappelli==2.4.4
-South==0.7.6
-pytz==2013b
+django-grappelli==2.4.6
+South==0.8.2
+pytz==2013d

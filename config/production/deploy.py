@@ -7,7 +7,7 @@ from shutil import copytree
 # Config
 APP_DIRECTORY = './app'
 
-GIT_REPOSITORY = 'git@bitbucket.org:fmartingr/minecraftcodex.git'
+GIT_REPOSITORY = 'git@github.com:fmartingr/minecraftcodex.git'
 GIT_DOWNLOAD_DIR = './src'
 GIT_APP_PATH = 'minecraftcodex'
 GIT_PATH_THIS = '%s/config/production/deploy.py' % GIT_DOWNLOAD_DIR
